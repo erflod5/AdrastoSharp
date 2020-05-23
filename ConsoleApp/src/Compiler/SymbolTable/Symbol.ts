@@ -1,12 +1,19 @@
+import { Type, Types } from "../Utils/Type";
 
 export class Symbol{
-    type : any;
+    type : Type;
     identifier : string;
     position : number;
+    isConst : boolean;
+    isGlobal : boolean;
+    isRef : boolean;
 
-    constructor(type: any, identifier: string, position: number){
+    constructor(type: Type, identifier: string, position: number, isConst: boolean, isGlobal: boolean, isRef : boolean){
         this.type = type;
         this.identifier = identifier;
         this.position = position;
+        this.isConst = isConst;
+        this.isGlobal = isGlobal;
+        this.isRef = isRef;
     }
 }

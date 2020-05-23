@@ -41,7 +41,7 @@ export class Generator{
         this.code.push(`${label}:`);
     }
 
-    public addExpression(target : string, left: any, right: any, operator: string){
+    public addExpression(target : string, left: any, right: any = '', operator: string = ''){
         this.code.push(`${target} = ${left + operator + right};`);
     }
 

@@ -1,14 +1,15 @@
 import { Symbol } from "../SymbolTable/Symbol";
+import { Type } from "./Type";
 
 export class Retorno{
     value : string;
     isTemp : boolean;
-    type : any;
+    type : Type;
     trueLabel : string;
     falseLabel : string;
     symbol : Symbol | null;
 
-    constructor(value: string, isTemp: boolean, type: any, symbol: Symbol| null){
+    constructor(value: string, isTemp: boolean, type: Type, symbol: Symbol | null= null){
         this.value = value;
         this.isTemp = isTemp;
         this.type = type;
