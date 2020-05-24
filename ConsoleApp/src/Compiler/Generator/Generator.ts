@@ -94,7 +94,7 @@ export class Generator{
     }
 
     public addPrint(format: string, value: any){
-        this.code.push(`print(%${format},${value});`);
+        this.code.push(`print("%${format}",${value});`);
     }
 
     public addPrintTrue(){

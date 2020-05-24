@@ -8,8 +8,8 @@
     const {Break} = require('../Compiler/Instruction/Transfer/Break');
     const {Continue} = require('../Compiler/Instruction/Transfer/Continue');
     const {Return} = require('../Compiler/Instruction/Transfer/Return');
-    
-    const {Return} = require('../Compiler/Instruction/Transfer/Return');
+
+    const {Declaration} = require('../Compiler/Instruction/Variables/Declaration');
 
     const {Div} = require('../Compiler/Expression/Arithmetic/Div');
     const {Minus} = require('../Compiler/Expression/Arithmetic/Minus');
@@ -30,6 +30,8 @@
     const {Less} = require('../Compiler/Expression/Relational/Less');
     const {NotEquals} = require('../Compiler/Expression/Relational/NotEquals');
 
+    const {AccessId} = require('../Compiler/Expression/Access/AccessId');
+
     const {Types,Type} = require('../Compiler/Utils/Type');
 
 %}
@@ -41,7 +43,7 @@ decimal {entero}"."{entero}
 %%
 
 \s+     {}
-"//".*
+"//".*  {}
 [/][*][^*]*[*]+([^/*][^*][*]+)*[/]  {}
 
 {decimal}             return 'LDECIMAL'
@@ -193,7 +195,7 @@ PrintSt
 
 Declaration
     : Type IdList '=' Expression{
-
+        $$ = new Declaration($1,$2,$4,@1.first_line,@1.first_column);
     }
 ;
 
@@ -291,5 +293,14 @@ Expression
     }  
     | '(' Expression ')' { 
         $$ = $2; 
+    }
+    | AccessId {
+        $$ = $1;
+    }
+;
+
+AccessId 
+    : ID {
+        $$ = new AccessId($1,null,@1.first_line,@1.first_column);
     }
 ;

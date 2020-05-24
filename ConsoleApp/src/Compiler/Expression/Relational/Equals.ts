@@ -17,12 +17,13 @@ export class Equals extends Expression {
 
     compile(enviorement: Enviorement): Retorno {
         const left = this.left.compile(enviorement);
-        const right = this.right.compile(enviorement);
+        let right : Retorno | null = null;
         const generator = Generator.getInstance();
         switch (left.type.type) {
             case Types.INTEGER:
             case Types.DOUBLE:
             case Types.CHAR:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.INTEGER:
                     case Types.CHAR:
@@ -38,7 +39,28 @@ export class Equals extends Expression {
                     default:
                         break;
                 }
+            case Types.BOOLEAN:
+                const trueLabel = generator.newLabel();
+                const falseLabel = generator.newLabel();
+
+                generator.addLabel(left.trueLabel);
+                this.right.trueLabel = trueLabel;
+                this.right.falseLabel = falseLabel;
+                right = this.right.compile(enviorement);                
+
+                generator.addLabel(left.falseLabel);
+                this.right.trueLabel = falseLabel;
+                this.right.falseLabel = trueLabel;
+                right = this.right.compile(enviorement);
+                if(right.type.type = Types.BOOLEAN){
+                    const retorno = new Retorno('',false,left.type);
+                    retorno.trueLabel = trueLabel;
+                    retorno.falseLabel = falseLabel;
+                    return retorno;
+                }
+                break;
             case Types.STRING:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.STRING: {
                         const temp = generator.newTemporal();
@@ -75,6 +97,7 @@ export class Equals extends Expression {
                         break;
                 }
             case Types.NULL:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.STRING:
                     case Types.ARRAY:
@@ -92,6 +115,7 @@ export class Equals extends Expression {
                         break;    
                 }
             case Types.STRUCT:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.STRUCT:                    
                     case Types.NULL:
@@ -107,6 +131,7 @@ export class Equals extends Expression {
                         break;
                 }
             case Types.ARRAY:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.ARRAY:                    
                     case Types.NULL:
@@ -123,6 +148,6 @@ export class Equals extends Expression {
                 }
             default:
         }
-        throw new Error(this.line, this.column, 'Semantico', `No se puede ${left.type.type} == ${right.type.type}`);
+        throw new Error(this.line, this.column, 'Semantico', `No se puede ${left.type.type} == ${right?.type.type}`);
     }
 }

@@ -1,50 +1,84 @@
-/***** Inicia If *****/
-if (5==5) goto L0;
-goto L2;
-L2:
-if (1==1) goto L0;
-goto L1;
+goto L0;
 L0:
-print(%e,1);
+Stack[0] = 1;
+goto L2;
 L1:
+Stack[0] = 0;
+L2:
+Stack[1] = 10;
+Stack[2] = 10;
+Stack[3] = 10;
 /***** Inicia If *****/
-if (5==5) goto L4;
-goto L3;
+T0 = Stack[0];
+if (T0==1) goto L3;
+goto L4;
 L3:
-print(%e,2);
+T1 = Stack[0];
+if (T1==1) goto L5;
+goto L6;
 L4:
-/***** Inicia While *****/
-L5:
-if (1==1) goto L6;
-goto L7;
-L6:
-print(%e,1);
-goto L7;
+T2 = Stack[0];
+if (T2==1) goto L6;
 goto L5;
+L5:
+T3 = Stack[1];
+T4 = Stack[2];
+T5 = T3+T4;
+T6 = Stack[3];
+T7 = T5+T6;
+print("%i",T7);
+L6:
+goto L7;
 L7:
-/***** Finaliza while *****/
-/***** Inicia While *****/
+goto L9;
 L8:
-if (2==2) goto L9;
 goto L10;
 L9:
-/***** Inicia If *****/
-if (1==1) goto L11;
-goto L12;
+print("%c",116);
+print("%c",114);
+print("%c",117);
+print("%c",101);
+goto L11;
+L10:
+print("%c",102);
+print("%c",97);
+print("%c",108);
+print("%c",115);
+print("%c",101);
 L11:
-/***** Inicia If *****/
-if (2==2) goto L13;
-goto L14;
+goto L13;
+L12:
+goto L15;
 L13:
-/***** Inicia If *****/
-if (3==3) goto L15;
+goto L14;
+L14:
+print("%c",116);
+print("%c",114);
+print("%c",117);
+print("%c",101);
 goto L16;
 L15:
-print(%e,2);
-goto L8;
+print("%c",102);
+print("%c",97);
+print("%c",108);
+print("%c",115);
+print("%c",101);
 L16:
-L14:
-L12:
-goto L8;
-L10:
-/***** Finaliza while *****/
+goto L17;
+L17:
+goto L20;
+L18:
+goto L19;
+L19:
+print("%c",116);
+print("%c",114);
+print("%c",117);
+print("%c",101);
+goto L21;
+L20:
+print("%c",102);
+print("%c",97);
+print("%c",108);
+print("%c",115);
+print("%c",101);
+L21:

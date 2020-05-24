@@ -17,7 +17,7 @@ export class Print extends Instruction {
         const generator = Generator.getInstance();
         switch (value.type.type) {
             case Types.INTEGER:
-                generator.addPrint('e', value.getValue());
+                generator.addPrint('i', value.getValue());
                 break;
             case Types.DOUBLE:
                 generator.addPrint('d', value.getValue());
