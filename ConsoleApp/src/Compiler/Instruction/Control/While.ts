@@ -19,6 +19,7 @@ export class While extends Instruction {
         const generator = Generator.getInstance();
         const newEnv = new Enviorement(enviorement);
         const lblWhile = generator.newLabel();
+        generator.addComment('Inicia While');
         generator.addLabel(lblWhile);
         const condition = this.condition.compile(enviorement);
         if(condition.type.type == Types.BOOLEAN){
@@ -28,6 +29,7 @@ export class While extends Instruction {
             this.instruction.compile(newEnv);
             generator.addGoto(lblWhile);
             generator.addLabel(condition.falseLabel);
+            generator.addComment('Finaliza while');
             return;
         }
         throw new Error(this.line,this.column,'Semantico',`La condicion no es booleana: ${condition?.type.type}`);

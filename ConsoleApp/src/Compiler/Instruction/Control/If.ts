@@ -6,11 +6,11 @@ import { Error } from "../../Utils/Error";
 import { Generator } from "../../Generator/Generator";
 
 export class If extends Instruction {
-    private condition: Expression | null;
+    private condition: Expression;
     private instruction: Instruction;
     private elseI: Instruction | null;
 
-    constructor(condition: Expression | null, instruction: Instruction, elseI: Instruction | null, line: number, column: number) {
+    constructor(condition: Expression, instruction: Instruction, elseI: Instruction | null, line: number, column: number) {
         super(line, column);
         this.condition = condition;
         this.instruction = instruction;
@@ -18,14 +18,11 @@ export class If extends Instruction {
     }
 
     compile(enviorement: Enviorement) : void{
-        const condition = this.condition?.compile(enviorement);
         const generator = Generator.getInstance();
+        generator.addComment('Inicia If');
+        const condition = this.condition?.compile(enviorement);
         const newEnv = new Enviorement(enviorement);
-        if(condition == undefined){
-            this.instruction.compile(newEnv);
-            return;
-        }
-        else if(condition.type.type == Types.BOOLEAN){
+        if(condition.type.type == Types.BOOLEAN){
             generator.addLabel(condition.trueLabel);
             this.instruction.compile(newEnv);
             if(this.elseI != null){

@@ -32,19 +32,11 @@
 %options case-insensitive
 entero [0-9]+
 decimal {entero}"."{entero}
-identificador [a-zA-Z_]([_]|[a-zA-ZñÑ]|[0-9])*
-escapechar [\'\"\\bfnrtv]
-escape \\{escapechar}
-acceptedquote [^\"\\]+
-stringliteral (\"({escape}|{acceptedquote})*\")
 %%
 
-\s+
+\s+     {}
 "//".*
-[/][*][^*]*[*]+([^/*][^*][*]+)*[/]
-
-{stringliteral}    { yytext = yytext.substr(1,yyleng-2).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LSTRING'; }
-[\']([^\t\'\"\n]|(\\\")|(\\n)|(\\\')|(\\t))?[\']  { yytext = yytext.substr(1,yyleng-2).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LCHAR'; }
+[/][*][^*]*[*]+([^/*][^*][*]+)*[/]  {}
 
 {decimal}             return 'LDECIMAL'
 {entero}              return 'LINTEGER' 
@@ -83,13 +75,16 @@ stringliteral (\"({escape}|{acceptedquote})*\")
 "return"              return 'RETURN'
 "print"               return 'PRINT'
 
-{identificador}       return 'ID'
+([a-zA-Z_])[a-zA-Z0-9_ñÑ]*       return 'ID'
+[\']([^\t\'\"\n]|(\\\")|(\\n)|(\\\')|(\\t))?[\'] { yytext = yytext.substr(1,yyleng-2).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LCHAR'; }
 
-/* Espacios en blanco */
-[ \r\t]+            {}
-\n                  {}
+\"[^"]+\" { yytext = yytext.slice(1,-1).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LSTRING'; }
 
 <<EOF>>				  return 'EOF'
+
+. { 
+    console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column);        
+}
 
 /lex
 
@@ -215,7 +210,7 @@ Expression
         $$ = new PrimitiveL(Types.INTEGER, $1, @1.first_line, @1.first_column); 
     }
     | LCHAR { 
-        $$ = new PrimitiveL(Types.CHAR, $1, @1.first_line, @1.first_column); 
+        $$ = new PrimitiveL(Types.CHAR, $1.charCodeAt(0), @1.first_line, @1.first_column); 
     } 
     | LDECIMAL { 
         $$ = new PrimitiveL(Types.DOUBLE, $1, @1.first_line, @1.first_column); 
@@ -226,8 +221,8 @@ Expression
     | FALSE { 
         $$ = new PrimitiveL(Types.BOOLEAN, false, @1.first_line, @1.first_column); 
     }
-    | StringL {  
-        $$ = new LSTRING(Types.STRING,$1,@1.first_line,@1.first_column);
+    | LSTRING {  
+        $$ = new StringL(Types.STRING,$1,@1.first_line,@1.first_column);
     }  
     | '(' Expression ')' { 
         $$ = $2; 

@@ -118,4 +118,8 @@ export class Generator{
         this.addPrint('c','l'.charCodeAt(0));
         this.addPrint('c','l'.charCodeAt(0));
     }
+
+    public addComment(comment: string){
+        this.code.push(`/***** ${comment} *****/`);
+    }
 }

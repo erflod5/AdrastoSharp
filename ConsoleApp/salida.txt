@@ -1,61 +1,31 @@
-T0 = 1+1;
-T1 = T0+1;
-print(%e,T1);
-if (5==5) goto L0;
-goto L1;
-L0:
-print(%c,a);
-goto L2;
-L1:
-if (1==1) goto L3;
-goto L4;
-L3:
-print(%c,b);
-goto L5;
-L4:
-if (2==2) goto L6;
-goto L7;
-L6:
-print(%c,d);
-goto L8;
-L7:
-print(%c,c);
-L8:
-L5:
-L2:
-L9:
-goto L10;
-L10:
-goto L12;
-L12:
-print(%c,116);
-print(%c,114);
-print(%c,117);
-print(%c,101);
-goto L14;
-L13:
-print(%c,102);
-print(%c,97);
-print(%c,108);
-print(%c,115);
-print(%c,101);
-L14:
-goto L9;
-L11:
-L15:
-goto L18;
-L17:
-print(%c,116);
-print(%c,114);
-print(%c,117);
-print(%c,101);
-goto L19;
-L18:
-print(%c,102);
-print(%c,97);
-print(%c,108);
-print(%c,115);
-print(%c,101);
-L19:
-goto L16;
-L16:
+T0 = h;
+Heap[h] = 104;
+h = h + 1;
+Heap[h] = 111;
+h = h + 1;
+Heap[h] = 108;
+h = h + 1;
+Heap[h] = 97;
+h = h + 1;
+Heap[h] = 32;
+h = h + 1;
+Heap[h] = 109;
+h = h + 1;
+Heap[h] = 117;
+h = h + 1;
+Heap[h] = 110;
+h = h + 1;
+Heap[h] = 100;
+h = h + 1;
+Heap[h] = 111;
+h = h + 1;
+Heap[h] = 32;
+h = h + 1;
+Heap[h] = 10;
+h = h + 1;
+Heap[h] = -1;
+h = h + 1;
+p = p + 0;
+Stack[p] = T0;
+call native_print_str();
+p = p - 0;

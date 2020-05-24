@@ -18,6 +18,7 @@ export class DoWhile extends Instruction {
     compile(enviorement: Enviorement) : void{
         const generator = Generator.getInstance();
         const newEnv = new Enviorement(enviorement);
+        generator.addComment('Inicia DoWhile');
         newEnv.continue = this.condition.trueLabel = generator.newLabel();
         newEnv.break = this.condition.falseLabel = generator.newLabel();
         generator.addLabel(this.condition.trueLabel);
@@ -25,6 +26,7 @@ export class DoWhile extends Instruction {
         const condition = this.condition.compile(enviorement);
         if(condition.type.type == Types.BOOLEAN){
             generator.addLabel(condition.falseLabel);
+            generator.addComment('Finaliza DoWhile');
             return;
         }
         throw new Error(this.line,this.column,'Semantico',`La condicion no es booleana: ${condition?.type.type}`);
