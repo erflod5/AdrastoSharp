@@ -5,6 +5,12 @@
     const {InstrBody} = require('../Compiler/Instruction/Control/InstrBody');
     const {Print} = require('../Compiler/Instruction/Functions/Print');
 
+    const {Break} = require('../Compiler/Instruction/Transfer/Break');
+    const {Continue} = require('../Compiler/Instruction/Transfer/Continue');
+    const {Return} = require('../Compiler/Instruction/Transfer/Return');
+    
+    const {Return} = require('../Compiler/Instruction/Transfer/Return');
+
     const {Div} = require('../Compiler/Expression/Arithmetic/Div');
     const {Minus} = require('../Compiler/Expression/Arithmetic/Minus');
     const {Mod} = require('../Compiler/Expression/Arithmetic/Mod');
@@ -24,7 +30,7 @@
     const {Less} = require('../Compiler/Expression/Relational/Less');
     const {NotEquals} = require('../Compiler/Expression/Relational/NotEquals');
 
-    const {Types} = require('../Compiler/Utils/Type');
+    const {Types,Type} = require('../Compiler/Utils/Type');
 
 %}
 
@@ -47,6 +53,7 @@ decimal {entero}"."{entero}
 "+"                   return '+'
 "||"                  return '||'
 "&&"                  return '&&'
+"!"                   return '!'
 "<"                   return '<'
 ">"                   return '>'
 "<="                  return '<='
@@ -63,8 +70,9 @@ decimal {entero}"."{entero}
 ","                   return ','
 "integer"             return 'INTEGER'
 "double"              return 'DOUBLE'
-"string"              return 'STRING'
 "boolean"             return 'BOOLEAN'
+"char"                return 'CHAR'
+"STRING"              return 'STRING'
 "true"                return 'TRUE'
 "false"               return 'FALSE'
 "if"                  return 'IF'
@@ -74,6 +82,8 @@ decimal {entero}"."{entero}
 "do"                  return 'DO'
 "return"              return 'RETURN'
 "print"               return 'PRINT'
+"continue"            return 'CONTINUE'
+"break"               return 'BREAK'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*       return 'ID'
 [\']([^\t\'\"\n]|(\\\")|(\\n)|(\\\')|(\\t))?[\'] { yytext = yytext.substr(1,yyleng-2).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LCHAR'; }
@@ -134,6 +144,15 @@ Instruction
     | InstructionSt {
         $$ = $1;
     }
+    | BREAK ';'{
+        $$ = new Break(@1.first_line,@1.first_column);
+    }
+    | CONTINUE ';'{
+        $$ = new Continue(@1.first_line,@1.first_column);
+    }
+    | Declaration ';'{
+        $$ = $1;
+    }
 ;
 
 InstructionSt 
@@ -172,6 +191,43 @@ PrintSt
     }
 ;
 
+Declaration
+    : Type IdList '=' Expression{
+
+    }
+;
+
+Type 
+    : INTEGER {
+        $$ = new Type(Types.INTEGER);
+    }
+    | DOUBLE {
+        $$ = new Type(Types.DOUBLE);
+    }
+    | BOOLEAN {
+        $$ = new Type(Types.BOOLEAN);
+    }
+    | CHAR {
+        $$ = new Type(Types.CHAR);
+    }
+    | STRING {
+        $$ = new Type(Types.STRING);
+    }
+    | ID {
+        $$ = new Type(Types.STRUCT,$1);
+    }
+;
+
+IdList 
+    : IdList ',' ID{
+        $$ = $1;
+        $$.push($3);
+    }
+    | ID{
+        $$ = [$1];
+    }
+;
+
 Expression 
     : '-' Expression %prec UMENOS { 
         $$ = null;
@@ -205,6 +261,15 @@ Expression
     }
     | Expression '!=' Expression { 
         $$ = new NotEquals($1, $3, @1.first_line, @1.first_column); 
+    }
+    | Expression '&&' Expression { 
+        $$ = new And($1, $3, @1.first_line, @1.first_column); 
+    }
+    | Expression '||' Expression { 
+        $$ = new Or($1, $3, @1.first_line, @1.first_column); 
+    }
+    | '!' Expression { 
+        $$ = new Not($2, @1.first_line, @1.first_column); 
     }
     | LINTEGER { 
         $$ = new PrimitiveL(Types.INTEGER, $1, @1.first_line, @1.first_column); 

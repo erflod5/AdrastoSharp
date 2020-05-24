@@ -1,31 +1,50 @@
-T0 = h;
-Heap[h] = 104;
-h = h + 1;
-Heap[h] = 111;
-h = h + 1;
-Heap[h] = 108;
-h = h + 1;
-Heap[h] = 97;
-h = h + 1;
-Heap[h] = 32;
-h = h + 1;
-Heap[h] = 109;
-h = h + 1;
-Heap[h] = 117;
-h = h + 1;
-Heap[h] = 110;
-h = h + 1;
-Heap[h] = 100;
-h = h + 1;
-Heap[h] = 111;
-h = h + 1;
-Heap[h] = 32;
-h = h + 1;
-Heap[h] = 10;
-h = h + 1;
-Heap[h] = -1;
-h = h + 1;
-p = p + 0;
-Stack[p] = T0;
-call native_print_str();
-p = p - 0;
+/***** Inicia If *****/
+if (5==5) goto L0;
+goto L2;
+L2:
+if (1==1) goto L0;
+goto L1;
+L0:
+print(%e,1);
+L1:
+/***** Inicia If *****/
+if (5==5) goto L4;
+goto L3;
+L3:
+print(%e,2);
+L4:
+/***** Inicia While *****/
+L5:
+if (1==1) goto L6;
+goto L7;
+L6:
+print(%e,1);
+goto L7;
+goto L5;
+L7:
+/***** Finaliza while *****/
+/***** Inicia While *****/
+L8:
+if (2==2) goto L9;
+goto L10;
+L9:
+/***** Inicia If *****/
+if (1==1) goto L11;
+goto L12;
+L11:
+/***** Inicia If *****/
+if (2==2) goto L13;
+goto L14;
+L13:
+/***** Inicia If *****/
+if (3==3) goto L15;
+goto L16;
+L15:
+print(%e,2);
+goto L8;
+L16:
+L14:
+L12:
+goto L8;
+L10:
+/***** Finaliza while *****/
