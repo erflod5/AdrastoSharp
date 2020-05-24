@@ -1,0 +1,24 @@
+{
+  "name": "consoleapp",
+  "version": "1.0.0",
+  "description": "Compilador :)",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "dev": "nodemon",
+    "prod": "tsc && node ./build/index.js",
+    "ts:node": "ts-node src/",
+    "jison": "jison ./src/Grammar/grammar.jison && mv grammar.js ./src/Grammar"
+  },
+  "author": "Erik Flores",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.9.3",
+    "@types/node": "^14.0.4"
+  },
+  "dependencies": {
+    "jison": "^0.4.18"
+  }
+}
