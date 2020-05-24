@@ -23,3 +23,39 @@ print(%c,c);
 L8:
 L5:
 L2:
+L9:
+goto L10;
+L10:
+goto L12;
+L12:
+print(%c,116);
+print(%c,114);
+print(%c,117);
+print(%c,101);
+goto L14;
+L13:
+print(%c,102);
+print(%c,97);
+print(%c,108);
+print(%c,115);
+print(%c,101);
+L14:
+goto L9;
+L11:
+L15:
+goto L18;
+L17:
+print(%c,116);
+print(%c,114);
+print(%c,117);
+print(%c,101);
+goto L19;
+L18:
+print(%c,102);
+print(%c,97);
+print(%c,108);
+print(%c,115);
+print(%c,101);
+L19:
+goto L16;
+L16:

@@ -12,3 +12,11 @@ else if( 2 == 2){
 else{
     print('c');
 }
+
+while(true){
+    print(true);
+}
+
+do{
+    print(false);
+} while(false);

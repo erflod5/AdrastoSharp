@@ -74,7 +74,7 @@ stringliteral (\"({escape}|{acceptedquote})*\")
 "string"              return 'STRING'
 "boolean"             return 'BOOLEAN'
 "true"                return 'TRUE'
-"false"               return 'FLASE'
+"false"               return 'FALSE'
 "if"                  return 'IF'
 "else"                return 'ELSE'
 "void"                return 'VOID'
@@ -223,8 +223,8 @@ Expression
     | TRUE { 
         $$ = new PrimitiveL(Types.BOOLEAN, true, @1.first_line, @1.first_column); 
     }
-    | false { 
-        $$ = new PrimitivoL(Types.BOOLEAN, false, @1.first_line, @1.first_column); 
+    | FALSE { 
+        $$ = new PrimitiveL(Types.BOOLEAN, false, @1.first_line, @1.first_column); 
     }
     | StringL {  
         $$ = new LSTRING(Types.STRING,$1,@1.first_line,@1.first_column);
