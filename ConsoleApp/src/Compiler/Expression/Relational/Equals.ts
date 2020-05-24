@@ -5,7 +5,7 @@ import { Retorno } from "../../Utils/Retorno";
 import { Generator } from "../../Generator/Generator";
 import { Type, Types } from "../../Utils/Type";
 
-export class Equal extends Expression {
+export class Equals extends Expression {
     private left: Expression;
     private right: Expression;
 

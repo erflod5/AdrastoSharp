@@ -1,0 +1,25 @@
+T0 = 1+1;
+T1 = T0+1;
+print(%e,T1);
+if (5==5) goto L0;
+goto L1;
+L0:
+print(%c,a);
+goto L2;
+L1:
+if (1==1) goto L3;
+goto L4;
+L3:
+print(%c,b);
+goto L5;
+L4:
+if (2==2) goto L6;
+goto L7;
+L6:
+print(%c,d);
+goto L8;
+L7:
+print(%c,c);
+L8:
+L5:
+L2:
