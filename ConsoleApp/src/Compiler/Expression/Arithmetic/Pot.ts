@@ -16,16 +16,16 @@ export class Pot extends Expression{
     }
 
     public compile(enviorement: Enviorement): Retorno {
-        let left = this.left.compile(enviorement);
-        let right = this.right.compile(enviorement);
-        let generator = Generator.getInstance();
-        let temp = generator.newTemporal();
+        const left = this.left.compile(enviorement);
+        const right = this.right.compile(enviorement);
+        const generator = Generator.getInstance();
+        const temp = generator.newTemporal();
         switch (left.type.type) {
             case Types.INTEGER:
                 switch (right.type.type) {
                     case Types.INTEGER:
                     case Types.CHAR:
-                        let tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.value);
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -42,7 +42,7 @@ export class Pot extends Expression{
                 switch (right.type.type) {
                     case Types.INTEGER:
                     case Types.CHAR:
-                        let tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.value);
                         generator.addExpression(tempAux,tempAux,'1','+');

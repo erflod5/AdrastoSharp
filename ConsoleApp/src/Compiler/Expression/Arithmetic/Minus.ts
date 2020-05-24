@@ -16,10 +16,10 @@ export class Minus extends Expression {
     }
 
     public compile(enviorement: Enviorement): Retorno {
-        let left = this.left.compile(enviorement);
-        let right = this.right.compile(enviorement);
-        let generator = Generator.getInstance();
-        let temp = generator.newTemporal();
+        const left = this.left.compile(enviorement);
+        const right = this.right.compile(enviorement);
+        const generator = Generator.getInstance();
+        const temp = generator.newTemporal();
         switch (left.type.type) {
             case Types.INTEGER:
                 switch (right.type.type) {

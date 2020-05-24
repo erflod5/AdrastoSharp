@@ -16,10 +16,10 @@ export class Plus extends Expression {
     }
 
     public compile(enviorement: Enviorement): Retorno {
-        let left = this.left.compile(enviorement);
-        let right = this.right.compile(enviorement);
-        let generator = Generator.getInstance();
-        let temp = generator.newTemporal();
+        const left = this.left.compile(enviorement);
+        const right = this.right.compile(enviorement);
+        const generator = Generator.getInstance();
+        const temp = generator.newTemporal();
         switch (left.type.type) {
             case Types.INTEGER:
                 switch (right.type.type) {
@@ -29,7 +29,7 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.value, right.value, '+');
                         return new Retorno(temp, true, right.type.type == Types.DOUBLE ? right.type : left.type);
                     case Types.STRING:
-                        let tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.value);
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -50,7 +50,7 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.value, right.value, '+');
                         return new Retorno(temp, true, left.type);
                     case Types.STRING:
-                        let tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.value);
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -71,7 +71,7 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.value, right.value, '+');
                         return new Retorno(temp, true, right.type.type == Types.DOUBLE ? right.type : new Type(Types.INTEGER));
                     case Types.STRING:
-                        let tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.value);
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -85,7 +85,7 @@ export class Plus extends Expression {
                         break;
                 }
             case Types.STRING:
-                let tempAux = generator.newTemporal();
+                const tempAux = generator.newTemporal();
                 switch (right.type.type) {
                     case Types.INTEGER:
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
@@ -128,7 +128,7 @@ export class Plus extends Expression {
                         generator.addAntEnv(enviorement.size);
                         return new Retorno(temp, true, new Type(Types.STRING));
                     case Types.BOOLEAN:
-                        let lblTemp = generator.newLabel();
+                        const lblTemp = generator.newLabel();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.value);
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -153,8 +153,8 @@ export class Plus extends Expression {
             case Types.BOOLEAN:
                 switch (right.type.type) {
                     case Types.STRING:
-                        let tempAux = generator.newTemporal();
-                        let lblTemp = generator.newLabel();
+                        const tempAux = generator.newTemporal();
+                        const lblTemp = generator.newLabel();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addLabel(left.trueLabel);
                         generator.addSetStack(tempAux,'1');

@@ -22,8 +22,8 @@ export class PrimitiveL extends Expression {
             case Types.CHAR:
                 return new Retorno(this.value,false,new Type(this.type));
             case Types.BOOLEAN:
-                let generator = Generator.getInstance();
-                let retorno = new Retorno('',false,new Type(this.type));
+                const generator = Generator.getInstance();
+                const retorno = new Retorno('',false,new Type(this.type));
                 this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                 this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
                 this.value ? generator.addGoto(this.trueLabel) : generator.addGoto(this.falseLabel);

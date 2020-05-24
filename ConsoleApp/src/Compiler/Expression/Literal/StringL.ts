@@ -15,8 +15,8 @@ export class StringL extends Expression {
     }
 
     public compile(enviorement: Enviorement): Retorno {
-        let generator = Generator.getInstance();
-        let temp = generator.newTemporal();
+        const generator = Generator.getInstance();
+        const temp = generator.newTemporal();
         generator.addExpression(temp, 'h');
         for (let i = 0; i < this.value.length; i++) {
             generator.addSetHeap('h', this.value.charCodeAt(i));
