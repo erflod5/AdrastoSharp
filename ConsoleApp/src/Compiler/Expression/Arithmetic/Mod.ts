@@ -25,7 +25,7 @@ export class Mod extends Expression{
                 switch (right.type.type) {
                     case Types.INTEGER:
                     case Types.CHAR:
-                        generator.addExpression(temp, left.value, right.value, '%');
+                        generator.addExpression(temp, left.getValue(), right.getValue(), '%');
                         return new Retorno(temp, true, left.type);
                     default:
                         break;
@@ -34,7 +34,7 @@ export class Mod extends Expression{
                 switch (right.type.type) {
                     case Types.INTEGER:
                     case Types.CHAR:
-                        generator.addExpression(temp, left.value, right.value, '%');
+                        generator.addExpression(temp, left.getValue(), right.getValue(), '%');
                         return new Retorno(temp, true, new Type(Types.INTEGER));
                     default:
                         break;

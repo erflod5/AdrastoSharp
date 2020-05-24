@@ -30,10 +30,10 @@ export class Less extends Expression {
             this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
             this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
             if(this.isLessEqual){
-                generator.addIf(left.value,right.value,'<=',this.trueLabel);
+                generator.addIf(left.getValue(),right.getValue(),'<=',this.trueLabel);
             }
             else{
-                generator.addIf(left.value,right.value,'<',this.trueLabel);
+                generator.addIf(left.getValue(),right.getValue(),'<',this.trueLabel);
             }
             generator.addGoto(this.falseLabel);
             const retorno = new Retorno('',false,new Type(Types.BOOLEAN));

@@ -27,9 +27,9 @@ export class Pot extends Expression{
                     case Types.CHAR:
                         const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
-                        generator.addSetStack(tempAux,left.value);
+                        generator.addSetStack(tempAux,left.getValue());
                         generator.addExpression(tempAux,tempAux,'1','+');
-                        generator.addSetStack(tempAux,right.value);
+                        generator.addSetStack(tempAux,right.getValue());
                         generator.addNextEnv(enviorement.size);
                         generator.addCall('native_pot');
                         generator.addGetStack(temp,'p');
@@ -44,9 +44,9 @@ export class Pot extends Expression{
                     case Types.CHAR:
                         const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
-                        generator.addSetStack(tempAux,left.value);
+                        generator.addSetStack(tempAux,left.getValue());
                         generator.addExpression(tempAux,tempAux,'1','+');
-                        generator.addSetStack(tempAux,right.value);
+                        generator.addSetStack(tempAux,right.getValue());
                         generator.addNextEnv(enviorement.size);
                         generator.addCall('native_pot');
                         generator.addGetStack(temp,'p');
