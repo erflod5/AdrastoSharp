@@ -56,10 +56,10 @@ decimal {entero}"."{entero}
 "||"                  return '||'
 "&&"                  return '&&'
 "!"                   return '!'
-"<"                   return '<'
-">"                   return '>'
 "<="                  return '<='
 ">="                  return '>='
+"<"                   return '<'
+">"                   return '>'
 "=="                  return '=='
 "!="                  return '!='
 "="                   return '='
@@ -84,6 +84,7 @@ decimal {entero}"."{entero}
 "do"                  return 'DO'
 "return"              return 'RETURN'
 "print"               return 'PRINT'
+"println"             return 'PRINTLN'
 "continue"            return 'CONTINUE'
 "break"               return 'BREAK'
 
@@ -189,7 +190,10 @@ DoWhileSt
 
 PrintSt 
     : PRINT '(' Expression ')' {
-        $$ = new Print($3,@1.first_line,@1.first_column);
+        $$ = new Print($3,false,@1.first_line,@1.first_column);
+    }
+    | PRINTLN '(' Expression ')' {
+        $$ = new Print($3,true,@1.first_line,@1.first_column);
     }
 ;
 

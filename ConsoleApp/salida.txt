@@ -27,6 +27,7 @@ T5 = T3+T4;
 T6 = Stack[3];
 T7 = T5+T6;
 print("%i",T7);
+print("%c",10);
 L6:
 goto L7;
 L7:
@@ -46,6 +47,7 @@ print("%c",108);
 print("%c",115);
 print("%c",101);
 L11:
+print("%c",10);
 goto L13;
 L12:
 goto L15;
@@ -64,6 +66,7 @@ print("%c",108);
 print("%c",115);
 print("%c",101);
 L16:
+print("%c",10);
 goto L17;
 L17:
 goto L20;
@@ -82,3 +85,23 @@ print("%c",108);
 print("%c",115);
 print("%c",101);
 L21:
+print("%c",10);
+/***** Inicia While *****/
+L22:
+T8 = Stack[1];
+T9 = Stack[2];
+T10 = T8+T9;
+T11 = Stack[3];
+T12 = T10+T11;
+if (T12>=30) goto L23;
+goto L24;
+L23:
+print("%c",104);
+print("%c",111);
+print("%c",108);
+print("%c",97);
+print("%c",10);
+goto L24;
+goto L22;
+L24:
+/***** Finaliza while *****/

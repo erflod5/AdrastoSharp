@@ -2,9 +2,17 @@ boolean var1 = true;
 integer a,b,c = 10;
 
 if(var1 == var1){
-    print(a + b + c);
+    println(a + b + c);
 }
 
-print(true == true);
-print(false == false);
-print(true == false);
+println(true == true);
+println(false == false);
+println(true == false);
+
+while((a + b + c) >= 30){
+    print('h');
+    print('o');
+    print('l');
+    println('a');
+    break;
+}

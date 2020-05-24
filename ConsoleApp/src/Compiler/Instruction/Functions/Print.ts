@@ -6,10 +6,12 @@ import { Generator } from "../../Generator/Generator";
 
 export class Print extends Instruction {
     private value: Expression;
+    private isLine: boolean;
 
-    constructor(value: Expression, line: number, column: number) {
+    constructor(value: Expression, isLine: boolean, line: number, column: number) {
         super(line, column);
         this.value = value;
+        this.isLine = isLine;
     }
 
     compile(enviorement: Enviorement): void {
@@ -47,6 +49,9 @@ export class Print extends Instruction {
             //TODO print struct
             case Types.ARRAY:
             //TODO print array
+        }
+        if(this.isLine){
+            generator.addPrint('c',10);
         }
     }
 }
