@@ -29,7 +29,16 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.value, right.value, '+');
                         return new Retorno(temp, true, right.type.type == Types.DOUBLE ? right.type : left.type);
                     case Types.STRING:
-                    //TODO Integer + String
+                        let tempAux = generator.newTemporal();
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addSetStack(tempAux,left.value);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+                        generator.addSetStack(tempAux,right.value);
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_int_str');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
                     default:
                         break;
                 }
@@ -41,7 +50,16 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.value, right.value, '+');
                         return new Retorno(temp, true, left.type);
                     case Types.STRING:
-                    //TODO Double + String
+                        let tempAux = generator.newTemporal();
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addSetStack(tempAux,left.value);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+                        generator.addSetStack(tempAux,right.value);
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_dbl_str');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
                     default:
                         break;
                 }
@@ -53,29 +71,104 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.value, right.value, '+');
                         return new Retorno(temp, true, right.type.type == Types.DOUBLE ? right.type : new Type(Types.INTEGER));
                     case Types.STRING:
-                    //TODO Char + String
+                        let tempAux = generator.newTemporal();
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addSetStack(tempAux,left.value);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+                        generator.addSetStack(tempAux,right.value);
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_chr_str');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
                     default:
                         break;
                 }
             case Types.STRING:
+                let tempAux = generator.newTemporal();
                 switch (right.type.type) {
                     case Types.INTEGER:
-                    //TODO String + Integer
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addSetStack(tempAux,left.value);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+                        generator.addSetStack(tempAux,right.value);
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_str_int');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
                     case Types.CHAR:
-                    //TODO String + Char
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addSetStack(tempAux,left.value);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+                        generator.addSetStack(tempAux,right.value);
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_str_chr');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
                     case Types.DOUBLE:
-                    //TODO String + Double
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addSetStack(tempAux,left.value);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+                        generator.addSetStack(tempAux,right.value);
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_str_dbl');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
                     case Types.STRING:
-                    //TODO String + String
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addSetStack(tempAux,left.value);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+                        generator.addSetStack(tempAux,right.value);
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_str_str');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
                     case Types.BOOLEAN:
-                    //TODO String + Boolean
+                        let lblTemp = generator.newLabel();
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addSetStack(tempAux,left.value);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+
+                        generator.addLabel(right.trueLabel);
+                        generator.addSetStack(tempAux,'1');
+                        generator.addGoto(lblTemp);
+
+                        generator.addLabel(right.falseLabel);
+                        generator.addSetStack(tempAux,'0');
+                        generator.addLabel(lblTemp);
+
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_str_bol');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
+
                     default:
                         break;
                 }
             case Types.BOOLEAN:
                 switch (right.type.type) {
                     case Types.STRING:
-                    //TODO Boolean + String
+                        let tempAux = generator.newTemporal();
+                        let lblTemp = generator.newLabel();
+                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        generator.addLabel(left.trueLabel);
+                        generator.addSetStack(tempAux,'1');
+                        generator.addGoto(lblTemp);
+                        generator.addLabel(left.falseLabel);
+                        generator.addSetStack(tempAux,'0');
+                        generator.addLabel(lblTemp);
+                        generator.addExpression(tempAux,tempAux,'1','+');
+                        generator.addSetStack(tempAux,right.value);
+                        generator.addNextEnv(enviorement.size);
+                        generator.addCall('native_concat_bol_str');
+                        generator.addGetStack(temp,'p');
+                        generator.addAntEnv(enviorement.size);
+                        return new Retorno(temp, true, new Type(Types.STRING));
                     default:
                         break;
                 }
