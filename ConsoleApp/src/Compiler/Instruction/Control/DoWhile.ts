@@ -18,19 +18,12 @@ export class DoWhile extends Instruction {
     compile(enviorement: Enviorement) : void{
         const generator = Generator.getInstance();
         const newEnv = new Enviorement(enviorement);
-        const lblWhile = generator.newLabel();
-        generator.addLabel(lblWhile);
+        newEnv.continue = this.condition.trueLabel = generator.newLabel();
+        newEnv.break = this.condition.falseLabel = generator.newLabel();
+        generator.addLabel(this.condition.trueLabel);
+        this.instruction.compile(newEnv);
         const condition = this.condition.compile(enviorement);
-
-        
         if(condition.type.type == Types.BOOLEAN){
-            const breakLabel = generator.newLabel();
-            const continueLabel = generator.newLabel();
-            newEnv.break = breakLabel;
-            newEnv.continue = continueLabel;
-            generator.addLabel(condition.trueLabel);
-            this.instruction.compile(newEnv);
-            generator.addGoto(lblWhile);
             generator.addLabel(condition.falseLabel);
             return;
         }
