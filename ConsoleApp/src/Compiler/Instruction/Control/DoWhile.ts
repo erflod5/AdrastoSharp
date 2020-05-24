@@ -5,7 +5,7 @@ import { Types } from "../../Utils/Type";
 import { Error } from "../../Utils/Error";
 import { Generator } from "../../Generator/Generator";
 
-export class While extends Instruction {
+export class DoWhile extends Instruction {
     private condition: Expression;
     private instruction: Instruction;
 
@@ -21,9 +21,13 @@ export class While extends Instruction {
         const lblWhile = generator.newLabel();
         generator.addLabel(lblWhile);
         const condition = this.condition.compile(enviorement);
+
+        
         if(condition.type.type == Types.BOOLEAN){
-            newEnv.break = condition.falseLabel;
-            newEnv.continue = lblWhile;
+            const breakLabel = generator.newLabel();
+            const continueLabel = generator.newLabel();
+            newEnv.break = breakLabel;
+            newEnv.continue = continueLabel;
             generator.addLabel(condition.trueLabel);
             this.instruction.compile(newEnv);
             generator.addGoto(lblWhile);
