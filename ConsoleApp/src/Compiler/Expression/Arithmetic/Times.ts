@@ -26,7 +26,7 @@ export class Times extends Expression{
                     case Types.INTEGER:
                     case Types.CHAR:
                     case Types.DOUBLE:
-                        generator.addExpression(temp, left.value, right.value, '*');
+                        generator.addExpression(temp, left.getValue(), right.getValue(), '*');
                         return new Retorno(temp, true, right.type.type == Types.DOUBLE ? right.type : left.type);
                     default:
                         break;
@@ -36,7 +36,7 @@ export class Times extends Expression{
                     case Types.INTEGER:
                     case Types.CHAR:
                     case Types.DOUBLE:
-                        generator.addExpression(temp, left.value, right.value, '*');
+                        generator.addExpression(temp, left.getValue(), right.getValue(), '*');
                         return new Retorno(temp, true, left.type);
                     default:
                         break;
@@ -46,7 +46,7 @@ export class Times extends Expression{
                     case Types.INTEGER:
                     case Types.CHAR:
                     case Types.DOUBLE:
-                        generator.addExpression(temp, left.value, right.value, '*');
+                        generator.addExpression(temp, left.getValue(), right.getValue(), '*');
                         return new Retorno(temp, true, right.type.type == Types.DOUBLE ? right.type : new Type(Types.INTEGER));
                     default:
                         break;

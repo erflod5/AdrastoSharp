@@ -29,7 +29,7 @@ export class NotEquals extends Expression{
                     case Types.DOUBLE:
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '!=', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '!=', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -44,9 +44,9 @@ export class NotEquals extends Expression{
                         const temp = generator.newTemporal();
                         const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux, 'p', enviorement.size + 1, '+');
-                        generator.addSetStack(tempAux, left.value);
+                        generator.addSetStack(tempAux, left.getValue());
                         generator.addExpression(tempAux, tempAux, '1', '+');
-                        generator.addSetStack(tempAux, right.value);
+                        generator.addSetStack(tempAux, right.getValue());
                         generator.addNextEnv(enviorement.size);
                         generator.addCall('native_compare_str_str');
                         generator.addGetStack(temp, 'p');
@@ -64,7 +64,7 @@ export class NotEquals extends Expression{
                     case Types.NULL: {
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '!=', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '!=', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -82,7 +82,7 @@ export class NotEquals extends Expression{
                     case Types.NULL:
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '!=', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '!=', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -97,7 +97,7 @@ export class NotEquals extends Expression{
                     case Types.NULL:
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '!=', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '!=', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -112,7 +112,7 @@ export class NotEquals extends Expression{
                     case Types.NULL:
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '!=', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '!=', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;

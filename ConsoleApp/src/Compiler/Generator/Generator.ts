@@ -42,7 +42,7 @@ export class Generator{
     }
 
     public addExpression(target : string, left: any, right: any = '', operator: string = ''){
-        this.code.push(`${target} = ${left + operator + right};`);
+        this.code.push(`${target} = ${left} ${operator} ${right};`);
     }
 
     public addGoto(label : string){
@@ -50,7 +50,7 @@ export class Generator{
     }
 
     public addIf(left: any, right: any, operator: string, label : string){
-        this.code.push(`if (${left + operator + right}) goto ${label};`);
+        this.code.push(`if (${left} ${operator} ${right}) goto ${label};`);
     }
 
     public nextHeap(){
@@ -91,5 +91,35 @@ export class Generator{
 
     public addEnd(){
         this.code.push('end');
+    }
+
+    public addPrint(format: string, value: any){
+        this.code.push(`print("%${format}",${value});`);
+    }
+
+    public addPrintTrue(){
+        this.addPrint('c','t'.charCodeAt(0));
+        this.addPrint('c','r'.charCodeAt(0));
+        this.addPrint('c','u'.charCodeAt(0));
+        this.addPrint('c','e'.charCodeAt(0));
+    }
+
+    public addPrintFalse(){
+        this.addPrint('c','f'.charCodeAt(0));
+        this.addPrint('c','a'.charCodeAt(0));
+        this.addPrint('c','l'.charCodeAt(0));
+        this.addPrint('c','s'.charCodeAt(0));
+        this.addPrint('c','e'.charCodeAt(0));
+    }
+
+    public addPrintNull(){
+        this.addPrint('c','n'.charCodeAt(0));
+        this.addPrint('c','u'.charCodeAt(0));
+        this.addPrint('c','l'.charCodeAt(0));
+        this.addPrint('c','l'.charCodeAt(0));
+    }
+
+    public addComment(comment: string){
+        this.code.push(`/***** ${comment} *****/`);
     }
 }

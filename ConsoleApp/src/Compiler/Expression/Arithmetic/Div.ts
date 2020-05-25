@@ -29,7 +29,7 @@ export class Div extends Expression {
                     case Types.CHAR:
                     case Types.DOUBLE:
                         //TODO error division entre 0
-                        generator.addExpression(temp, left.value, right.value, '/');
+                        generator.addExpression(temp, left.getValue(), right.getValue(), '/');
                         return new Retorno(temp, true, new Type(Types.DOUBLE));
                     default:
                         break;

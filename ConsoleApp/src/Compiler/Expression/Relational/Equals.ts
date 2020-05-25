@@ -5,7 +5,7 @@ import { Retorno } from "../../Utils/Retorno";
 import { Generator } from "../../Generator/Generator";
 import { Type, Types } from "../../Utils/Type";
 
-export class Equal extends Expression {
+export class Equals extends Expression {
     private left: Expression;
     private right: Expression;
 
@@ -17,19 +17,20 @@ export class Equal extends Expression {
 
     compile(enviorement: Enviorement): Retorno {
         const left = this.left.compile(enviorement);
-        const right = this.right.compile(enviorement);
+        let right : Retorno | null = null;
         const generator = Generator.getInstance();
         switch (left.type.type) {
             case Types.INTEGER:
             case Types.DOUBLE:
             case Types.CHAR:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.INTEGER:
                     case Types.CHAR:
                     case Types.DOUBLE:
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '==', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '==', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -38,15 +39,36 @@ export class Equal extends Expression {
                     default:
                         break;
                 }
+            case Types.BOOLEAN:
+                const trueLabel = generator.newLabel();
+                const falseLabel = generator.newLabel();
+
+                generator.addLabel(left.trueLabel);
+                this.right.trueLabel = trueLabel;
+                this.right.falseLabel = falseLabel;
+                right = this.right.compile(enviorement);                
+
+                generator.addLabel(left.falseLabel);
+                this.right.trueLabel = falseLabel;
+                this.right.falseLabel = trueLabel;
+                right = this.right.compile(enviorement);
+                if(right.type.type = Types.BOOLEAN){
+                    const retorno = new Retorno('',false,left.type);
+                    retorno.trueLabel = trueLabel;
+                    retorno.falseLabel = falseLabel;
+                    return retorno;
+                }
+                break;
             case Types.STRING:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.STRING: {
                         const temp = generator.newTemporal();
                         const tempAux = generator.newTemporal();
                         generator.addExpression(tempAux, 'p', enviorement.size + 1, '+');
-                        generator.addSetStack(tempAux, left.value);
+                        generator.addSetStack(tempAux, left.getValue());
                         generator.addExpression(tempAux, tempAux, '1', '+');
-                        generator.addSetStack(tempAux, right.value);
+                        generator.addSetStack(tempAux, right.getValue());
                         generator.addNextEnv(enviorement.size);
                         generator.addCall('native_compare_str_str');
                         generator.addGetStack(temp, 'p');
@@ -64,7 +86,7 @@ export class Equal extends Expression {
                     case Types.NULL: {
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '==', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '==', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -75,6 +97,7 @@ export class Equal extends Expression {
                         break;
                 }
             case Types.NULL:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.STRING:
                     case Types.ARRAY:
@@ -82,7 +105,7 @@ export class Equal extends Expression {
                     case Types.NULL:
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '==', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '==', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -92,12 +115,13 @@ export class Equal extends Expression {
                         break;    
                 }
             case Types.STRUCT:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.STRUCT:                    
                     case Types.NULL:
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '==', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '==', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -107,12 +131,13 @@ export class Equal extends Expression {
                         break;
                 }
             case Types.ARRAY:
+                right = this.right.compile(enviorement);
                 switch (right.type.type) {
                     case Types.ARRAY:                    
                     case Types.NULL:
                         this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                         this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-                        generator.addIf(left.value, right.value, '==', this.trueLabel);
+                        generator.addIf(left.getValue(), right.getValue(), '==', this.trueLabel);
                         generator.addGoto(this.falseLabel);
                         const retorno = new Retorno('', false, new Type(Types.BOOLEAN));
                         retorno.trueLabel = this.trueLabel;
@@ -123,6 +148,6 @@ export class Equal extends Expression {
                 }
             default:
         }
-        throw new Error(this.line, this.column, 'Semantico', `No se puede ${left.type.type} == ${right.type.type}`);
+        throw new Error(this.line, this.column, 'Semantico', `No se puede ${left.type.type} == ${right?.type.type}`);
     }
 }

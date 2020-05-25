@@ -1,0 +1,33 @@
+Stack[0] = 10;
+/***** Inicia While *****/
+L0:
+T0 = Stack[0];
+if (T0 > 0) goto L1;
+goto L2;
+L1:
+T1 = Stack[0];
+print("%i",T1);
+print("%c",10);
+T2 = Stack[0];
+T3 = T2 - 1;
+Stack[0] = T3;
+goto L0;
+L2:
+/***** Finaliza while *****/
+/***** Inicia If *****/
+T4 = Stack[0];
+if (T4 == 0) goto L3;
+goto L4;
+L3:
+T5 = p + 1;
+Stack[T5] = 1;
+T6 = p + 1;
+T8 = p + 1;
+T7 = Stack[1];
+T9 = T7 + 1;
+Stack[T6] = T9;
+T11 = p + 1;
+T10 = Stack[1];
+print("%i",T10);
+print("%c",10);
+L4:

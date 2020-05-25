@@ -1,0 +1,11 @@
+integer a = 10;
+while(a > 0){
+    println(a);
+    a = a - 1;
+}
+
+if(a == 0){
+    integer b = 1;
+    b = b + 1;
+    println(b);
+}
