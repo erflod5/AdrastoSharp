@@ -42,7 +42,7 @@ export class Generator{
     }
 
     public addExpression(target : string, left: any, right: any = '', operator: string = ''){
-        this.code.push(`${target} = ${left + operator + right};`);
+        this.code.push(`${target} = ${left} ${operator} ${right};`);
     }
 
     public addGoto(label : string){
@@ -50,7 +50,7 @@ export class Generator{
     }
 
     public addIf(left: any, right: any, operator: string, label : string){
-        this.code.push(`if (${left + operator + right}) goto ${label};`);
+        this.code.push(`if (${left} ${operator} ${right}) goto ${label};`);
     }
 
     public nextHeap(){

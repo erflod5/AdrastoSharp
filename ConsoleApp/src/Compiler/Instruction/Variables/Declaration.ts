@@ -59,17 +59,6 @@ export class Declaration extends Instruction {
             }
         });
     }
-
-    private sameType(type1: Type, type2: Type) : boolean{
-        //TODO casteos implicitos
-        if(type1.type == type2.type){
-            if(type1.type == Types.STRUCT){
-                return type1.typeId === type2.typeId;
-            }
-            return true;
-        }
-        return false;
-    }
 }
 
 /**/

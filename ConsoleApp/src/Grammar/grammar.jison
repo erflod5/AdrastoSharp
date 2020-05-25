@@ -10,6 +10,7 @@
     const {Return} = require('../Compiler/Instruction/Transfer/Return');
 
     const {Declaration} = require('../Compiler/Instruction/Variables/Declaration');
+    const {Assignment} = require('../Compiler/Instruction/Variables/Assignment');
 
     const {Div} = require('../Compiler/Expression/Arithmetic/Div');
     const {Minus} = require('../Compiler/Expression/Arithmetic/Minus');
@@ -31,6 +32,7 @@
     const {NotEquals} = require('../Compiler/Expression/Relational/NotEquals');
 
     const {AccessId} = require('../Compiler/Expression/Access/AccessId');
+    const {AssignmentId} = require('../Compiler/Expression/Assignment/AssignmentId');
 
     const {Types,Type} = require('../Compiler/Utils/Type');
 
@@ -156,6 +158,9 @@ Instruction
     | Declaration ';'{
         $$ = $1;
     }
+    | Assignment ';' {
+        $$ = $1;
+    }
 ;
 
 InstructionSt 
@@ -201,6 +206,21 @@ Declaration
     : Type IdList '=' Expression{
         $$ = new Declaration($1,$2,$4,@1.first_line,@1.first_column);
     }
+    | ID IdList '=' Expression{
+        $$ = new Declaration(new Type(Types.STRUCT,$1),$2,$4,@1.first_line,@1.first_column);
+    }
+;
+
+Assignment
+    : AssignmentId '=' Expression {
+        $$ = new Assignment($1,$3,@1.first_line,@1.first_column);
+    }
+;
+
+AssignmentId
+    : ID {
+        $$ = new AssignmentId($1,null,@1.first_line,@1.first_column);
+    }
 ;
 
 Type 
@@ -218,9 +238,6 @@ Type
     }
     | STRING {
         $$ = new Type(Types.STRING);
-    }
-    | ID {
-        $$ = new Type(Types.STRUCT,$1);
     }
 ;
 

@@ -1,18 +1,11 @@
-boolean var1 = true;
-integer a,b,c = 10;
-
-if(var1 == var1){
-    println(a + b + c);
+integer a = 10;
+while(a > 0){
+    println(a);
+    a = a - 1;
 }
 
-println(true == true);
-println(false == false);
-println(true == false);
-
-while((a + b + c) >= 30){
-    print('h');
-    print('o');
-    print('l');
-    println('a');
-    break;
+if(a == 0){
+    integer b = 1;
+    b = b + 1;
+    println(b);
 }

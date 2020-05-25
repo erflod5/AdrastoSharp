@@ -1,107 +1,33 @@
-goto L0;
+Stack[0] = 10;
+/***** Inicia While *****/
 L0:
-Stack[0] = 1;
+T0 = Stack[0];
+if (T0 > 0) goto L1;
 goto L2;
 L1:
-Stack[0] = 0;
+T1 = Stack[0];
+print("%i",T1);
+print("%c",10);
+T2 = Stack[0];
+T3 = T2 - 1;
+Stack[0] = T3;
+goto L0;
 L2:
-Stack[1] = 10;
-Stack[2] = 10;
-Stack[3] = 10;
+/***** Finaliza while *****/
 /***** Inicia If *****/
-T0 = Stack[0];
-if (T0==1) goto L3;
+T4 = Stack[0];
+if (T4 == 0) goto L3;
 goto L4;
 L3:
-T1 = Stack[0];
-if (T1==1) goto L5;
-goto L6;
+T5 = p + 1;
+Stack[T5] = 1;
+T6 = p + 1;
+T8 = p + 1;
+T7 = Stack[1];
+T9 = T7 + 1;
+Stack[T6] = T9;
+T11 = p + 1;
+T10 = Stack[1];
+print("%i",T10);
+print("%c",10);
 L4:
-T2 = Stack[0];
-if (T2==1) goto L6;
-goto L5;
-L5:
-T3 = Stack[1];
-T4 = Stack[2];
-T5 = T3+T4;
-T6 = Stack[3];
-T7 = T5+T6;
-print("%i",T7);
-print("%c",10);
-L6:
-goto L7;
-L7:
-goto L9;
-L8:
-goto L10;
-L9:
-print("%c",116);
-print("%c",114);
-print("%c",117);
-print("%c",101);
-goto L11;
-L10:
-print("%c",102);
-print("%c",97);
-print("%c",108);
-print("%c",115);
-print("%c",101);
-L11:
-print("%c",10);
-goto L13;
-L12:
-goto L15;
-L13:
-goto L14;
-L14:
-print("%c",116);
-print("%c",114);
-print("%c",117);
-print("%c",101);
-goto L16;
-L15:
-print("%c",102);
-print("%c",97);
-print("%c",108);
-print("%c",115);
-print("%c",101);
-L16:
-print("%c",10);
-goto L17;
-L17:
-goto L20;
-L18:
-goto L19;
-L19:
-print("%c",116);
-print("%c",114);
-print("%c",117);
-print("%c",101);
-goto L21;
-L20:
-print("%c",102);
-print("%c",97);
-print("%c",108);
-print("%c",115);
-print("%c",101);
-L21:
-print("%c",10);
-/***** Inicia While *****/
-L22:
-T8 = Stack[1];
-T9 = Stack[2];
-T10 = T8+T9;
-T11 = Stack[3];
-T12 = T10+T11;
-if (T12>=30) goto L23;
-goto L24;
-L23:
-print("%c",104);
-print("%c",111);
-print("%c",108);
-print("%c",97);
-print("%c",10);
-goto L24;
-goto L22;
-L24:
-/***** Finaliza while *****/
