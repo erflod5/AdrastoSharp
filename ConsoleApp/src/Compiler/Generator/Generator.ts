@@ -15,6 +15,18 @@ export class Generator{
         return this.generator || (this.generator = new this());
     }
 
+    public getTempStorage(){
+        return this.tempStorage;
+    }
+
+    public clearTempStorage(){
+        this.tempStorage.clear();
+    }
+
+    public setTempStorage(tempStorage : Map<string,string>){
+        this.tempStorage = tempStorage;
+    }
+
     public clearCode(){
         this.temporal = this.label = 0;
         this.code = new Array();
@@ -86,11 +98,11 @@ export class Generator{
     }
 
     public addBegin(id: string){
-        this.code.push('begin ')
+        this.code.push(`\nproc ${id} begin`);
     }
 
     public addEnd(){
-        this.code.push('end');
+        this.code.push('end\n');
     }
 
     public addPrint(format: string, value: any){

@@ -4,6 +4,7 @@
     const {While} = require('../Compiler/Instruction/Control/While');
     const {InstrBody} = require('../Compiler/Instruction/Control/InstrBody');
     const {Print} = require('../Compiler/Instruction/Functions/Print');
+    const {FunctionSt} = require('../Compiler/Instruction/Functions/FunctionSt');
 
     const {Break} = require('../Compiler/Instruction/Transfer/Break');
     const {Continue} = require('../Compiler/Instruction/Transfer/Continue');
@@ -35,7 +36,7 @@
     const {AssignmentId} = require('../Compiler/Expression/Assignment/AssignmentId');
 
     const {Types,Type} = require('../Compiler/Utils/Type');
-
+    const {Param} = require('../Compiler/Utils/Param');
 %}
 
 %lex
@@ -118,10 +119,28 @@ decimal {entero}"."{entero}
 %%
 
 Init 
-    : Instructions EOF {
+    : GlobalInstr EOF {
         return $1;
     }
 ;
+
+GlobalInstr 
+    : GlobalInstr Instruction {
+        $$ = $1; 
+        $$.push($2);
+    }
+    | GlobalInstr FunctionSt {
+        $$ = $1; 
+        $$.push($2);
+    }
+    | FunctionSt {
+        $$ = [$1]; 
+    }
+    | Instruction{
+        $$ = [$1]; 
+    }
+;
+
 
 Instructions
     : Instructions Instruction {
@@ -166,6 +185,43 @@ Instruction
 InstructionSt 
     : LBRACE Instructions RBRACE {
         $$ = new InstrBody($2,@1.first_line,@1.first_column);
+    }
+;
+
+FunctionSt
+    : Type ID '(' Params ')' InstructionSt {
+        $$ = new FunctionSt($1,$2,$4,$6,@1.first_line,@1.first_column);
+    }
+    | ID ID '(' Params ')' InstructionSt {
+        $$ = new FunctionSt(new Type(Types.STRUCT,$1),$2,$4,$6,@1.first_line,@1.first_column);
+    }
+;
+
+Params
+    : ParamList {
+        $$ = $1;
+    }
+    | /*epsilon*/ {
+        $$ = [];
+    }
+;
+
+ParamList
+    : ParamList ',' Param {
+        $$ = $1;
+        $$.push($3);
+    }
+    | Param {
+        $$ = [$1];
+    }
+;
+
+Param
+    : Type ID {
+        $$ = new Param($2,$1);
+    }
+    | ID ID{
+        $$ = new Param($2,new Type(Type.STRUCT,$1));
     }
 ;
 

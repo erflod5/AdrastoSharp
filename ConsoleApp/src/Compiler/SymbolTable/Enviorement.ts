@@ -1,8 +1,9 @@
 import { SymbolFunction } from "./SymbolFunction";
 import { SymbolStruct } from "./SymbolStruct";
 import { Symbol } from "./Symbol";
-import { Type } from "../Utils/Type";
+import { Type, Types } from "../Utils/Type";
 import { Error } from "../Utils/Error";
+import { FunctionSt } from "../Instruction/Functions/FunctionSt";
 
 export class Enviorement {
     functions: Map<string, SymbolFunction>;
@@ -13,6 +14,8 @@ export class Enviorement {
     break: string | null;
     continue: string | null;
     return: string | null;
+    prop : string;
+    actualFunc: SymbolFunction | null = null;
 
     constructor(anterior: Enviorement | null = null) {
         this.functions = new Map();
@@ -23,6 +26,14 @@ export class Enviorement {
         this.break = anterior?.break || null;
         this.return = anterior?.return || null;
         this.continue = anterior?.continue || null;
+        this.prop = 'main';
+    }
+
+    setEnviorementFunc(prop: string, actualFunc : SymbolFunction, ret : string){
+        this.size = 1; //1 porque la posicion 0 es para el return
+        this.prop = prop;
+        this.return = ret;
+        this.actualFunc = actualFunc;
     }
 
     public addVar(id: string, type: Type, isConst: boolean, isRef: boolean): Symbol | null {
@@ -33,6 +44,14 @@ export class Enviorement {
         const newVar = new Symbol(type, id, this.size++, isConst, this.anterior == null, isRef)
         this.vars.set(id, newVar);
         return newVar;
+    }
+
+    public addFunc(func: FunctionSt, uniqueId: string) : boolean{
+        if(this.functions.has(func.id.toLowerCase())){
+            return false;
+        }
+        this.functions.set(func.id.toLowerCase(),new SymbolFunction(func,uniqueId));
+        return true;
     }
 
     public getVar(id: string) : Symbol | null{
@@ -46,5 +65,13 @@ export class Enviorement {
             enviorement = enviorement.anterior;
         }
         return null;
+    }
+
+    public getFunc(id: string) : SymbolFunction | undefined{
+        return this.functions.get(id.toLocaleLowerCase());
+    }
+
+    public structExists(id: string){
+        return this.structs.get(id.toLocaleLowerCase()) == undefined;
     }
 }

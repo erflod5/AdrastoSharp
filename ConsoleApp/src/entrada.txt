@@ -1,11 +1,9 @@
-integer a = 10;
-while(a > 0){
-    println(a);
-    a = a - 1;
+integer func(){
+    print(1);
 }
 
-if(a == 0){
-    integer b = 1;
-    b = b + 1;
-    println(b);
+integer func2(integer a){
+    integer a, b, c = 30;
+    print(a);
+    a = a + b;
 }

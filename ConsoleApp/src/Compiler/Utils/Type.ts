@@ -1,12 +1,13 @@
 export enum Types{
-    INTEGER,
-    DOUBLE,
-    STRING,
-    BOOLEAN,
-    CHAR,
-    STRUCT,
-    ARRAY,
-    NULL
+    INTEGER = "integer",
+    DOUBLE = "double",
+    STRING = "string",
+    BOOLEAN = "boolean",
+    CHAR = "char",
+    STRUCT = "struct",
+    ARRAY = "array",
+    NULL = "null",
+    VOID = "void"
 }
 
 export class Type{
