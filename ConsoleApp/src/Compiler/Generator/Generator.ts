@@ -94,7 +94,7 @@ export class Generator{
     }
 
     public addCall(id: string){
-        this.code.push(`call ${id}();`);
+        this.code.push(`call ${id};`);
     }
 
     public addBegin(id: string){

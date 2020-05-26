@@ -71,6 +71,19 @@ export class Enviorement {
         return this.functions.get(id.toLocaleLowerCase());
     }
 
+    public searchFunc(id: string) : SymbolFunction | null{
+        let enviorement : Enviorement | null = this;
+        id = id.toLowerCase();
+        while(enviorement != null){
+            const sym = enviorement.functions.get(id);
+            if(sym != undefined){
+                return sym;
+            }
+            enviorement = enviorement.anterior;
+        }
+        return null;
+    }
+
     public structExists(id: string){
         return this.structs.get(id.toLocaleLowerCase()) == undefined;
     }

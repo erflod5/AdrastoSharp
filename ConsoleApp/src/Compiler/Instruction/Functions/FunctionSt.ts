@@ -39,6 +39,9 @@ export class FunctionSt extends Instruction{
             const tempStorage = generator.getTempStorage();
 
             newEnv.setEnviorementFunc(this.id,symbolFunc,returnLbl);
+            this.params.forEach((param)=>{
+                newEnv.addVar(param.id,param.type,false,false);
+            });
             generator.clearTempStorage();
 
             generator.addBegin(symbolFunc.uniqueId);

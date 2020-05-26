@@ -1,9 +1,11 @@
 integer func(){
-    print(1);
+    println(1);
 }
 
-integer func2(integer a){
-    integer a, b, c = 30;
-    print(a);
-    a = a + b;
+integer func2(integer a, integer b, integer c){
+    integer a = 20;
+    println(a + b + c);
+    func();
 }
+
+func2(1,2,3);

@@ -34,6 +34,7 @@
 
     const {AccessId} = require('../Compiler/Expression/Access/AccessId');
     const {AssignmentId} = require('../Compiler/Expression/Assignment/AssignmentId');
+    const {AssignmentFunc} = require('../Compiler/Expression/Assignment/AssignmentFunc');
 
     const {Types,Type} = require('../Compiler/Utils/Type');
     const {Param} = require('../Compiler/Utils/Param');
@@ -180,6 +181,9 @@ Instruction
     | Assignment ';' {
         $$ = $1;
     }
+    | Call ';'{
+        $$ = $1;
+    }
 ;
 
 InstructionSt 
@@ -276,6 +280,31 @@ Assignment
 AssignmentId
     : ID {
         $$ = new AssignmentId($1,null,@1.first_line,@1.first_column);
+    }
+;
+
+Call
+    : ID '(' ParamsExpression ')' {
+        $$ = new AssignmentFunc($1,$3,null,@1.first_line,@1.first_column);
+    }
+;
+
+ParamsExpression
+    : ExpressionList {
+        $$ =  $1;
+    }
+    | /*epsilon*/ {
+        $$ = [];
+    }
+;
+
+ExpressionList
+    : ExpressionList ',' Expression {
+        $$ = $1;
+        $$.push($3);
+    }
+    | Expression {
+        $$ = [$1];
     }
 ;
 

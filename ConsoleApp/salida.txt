@@ -1,26 +1,38 @@
 
 proc main_func_empty begin
 print("%i",1);
+print("%c",10);
 L0:
 end
 
 
-proc main_func2_integer begin
-T0 = p + 1;
-Stack[T0] = 30;
-T1 = p + 2;
-Stack[T1] = 30;
-T2 = p + 3;
-Stack[T2] = 30;
-T4 = p + 1;
+proc main_func2_integer_integer_integer begin
+T0 = p + 4;
+Stack[T0] = 20;
+T2 = p + 4;
+T1 = Stack[T2];
+T4 = p + 2;
 T3 = Stack[T4];
-print("%i",T3);
-T5 = p + 1;
-T7 = p + 1;
+T5 = T1 + T3;
+T7 = p + 3;
 T6 = Stack[T7];
-T9 = p + 2;
-T8 = Stack[T9];
-T10 = T6 + T8;
-Stack[T5] = T10;
+T8 = T5 + T6;
+print("%i",T8);
+print("%c",10);
+p = p + 5;
+call main_func_empty;
+T9 = Stack[p];
+p = p - 5;
 L1:
 end
+
+T10 = p + 1;
+Stack[T10] = 1;
+T10 = T10 + 1;
+Stack[T10] = 2;
+T10 = T10 + 1;
+Stack[T10] = 3;
+p = p + 0;
+call main_func2_integer_integer_integer;
+T10 = Stack[p];
+p = p - 0;

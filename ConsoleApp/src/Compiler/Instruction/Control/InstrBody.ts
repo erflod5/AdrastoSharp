@@ -11,6 +11,7 @@ export class InstrBody extends Instruction {
     }
 
     compile(enviorement: Enviorement): any {
+        //TODO bug variables repetidas 
         const newEnv = new Enviorement(enviorement);
         this.instructions?.forEach((instruction)=>{
             try {
