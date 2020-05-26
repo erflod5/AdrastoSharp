@@ -1,11 +1,22 @@
 integer func(){
     println(1);
+    return 20;
 }
 
 integer func2(integer a, integer b, integer c){
-    integer a = 20;
     println(a + b + c);
     func();
+    if(true){
+        if(true){
+            if(true){
+                if(true){
+                    return 20;
+                }
+            }
+        }
+    }
+    return 10;
 }
 
-func2(1,2,3);
+integer a = func2(1+1,2+1,3+1) + func();
+println(a);

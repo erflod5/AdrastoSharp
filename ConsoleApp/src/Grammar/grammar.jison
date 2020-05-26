@@ -175,6 +175,12 @@ Instruction
     | CONTINUE ';'{
         $$ = new Continue(@1.first_line,@1.first_column);
     }
+    | RETURN ';' {
+        $$ = new Return(null,@1.first_line,@1.first_column);
+    }
+    | RETURN Expression ';'{
+        $$ = new Return($2,@1.first_line,@1.first_column);
+    }
     | Declaration ';'{
         $$ = $1;
     }
@@ -400,7 +406,16 @@ Expression
     | '(' Expression ')' { 
         $$ = $2; 
     }
-    | AccessId {
+    | Access {
+        $$ = $1;
+    }
+;
+
+Access
+    : AccessId {
+        $$ = $1;
+    }
+    | AccessFunc{
         $$ = $1;
     }
 ;
@@ -408,5 +423,11 @@ Expression
 AccessId 
     : ID {
         $$ = new AccessId($1,null,@1.first_line,@1.first_column);
+    }
+;
+
+AccessFunc
+    : Call {
+        $$ = $1;
     }
 ;

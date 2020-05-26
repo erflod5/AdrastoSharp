@@ -15,7 +15,7 @@ export class Enviorement {
     continue: string | null;
     return: string | null;
     prop : string;
-    actualFunc: SymbolFunction | null = null;
+    actualFunc: SymbolFunction | null;
 
     constructor(anterior: Enviorement | null = null) {
         this.functions = new Map();
@@ -27,6 +27,7 @@ export class Enviorement {
         this.return = anterior?.return || null;
         this.continue = anterior?.continue || null;
         this.prop = 'main';
+        this.actualFunc = anterior?.actualFunc || null;
     }
 
     setEnviorementFunc(prop: string, actualFunc : SymbolFunction, ret : string){

@@ -1,6 +1,5 @@
 import { Instruction } from "../../Abstract/Instruction";
 import { Enviorement } from "../../SymbolTable/Enviorement";
-import { Generator } from "../../Generator/Generator";
 
 export class InstrBody extends Instruction {
     private instructions: Array<Instruction> | null;

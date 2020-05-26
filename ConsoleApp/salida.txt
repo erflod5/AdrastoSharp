@@ -2,6 +2,8 @@
 proc main_func_empty begin
 print("%i",1);
 print("%c",10);
+Stack[p] = 20;
+goto L0;
 L0:
 end
 
@@ -21,16 +23,48 @@ p = p + 4;
 call main_func_empty;
 T8 = Stack[p];
 p = p - 4;
+/***** Inicia If *****/
+goto L2;
+L2:
+/***** Inicia If *****/
+goto L4;
+L4:
+/***** Inicia If *****/
+goto L6;
+L6:
+/***** Inicia If *****/
+goto L8;
+L8:
+Stack[p] = 20;
+goto L1;
+L9:
+L7:
+L5:
+L3:
+Stack[p] = 10;
+goto L1;
 L1:
 end
 
-T9 = p + 1;
-Stack[T9] = 1;
-T9 = T9 + 1;
-Stack[T9] = 2;
-T9 = T9 + 1;
-Stack[T9] = 3;
+T9 = 1 + 1;
+T10 = 2 + 1;
+T11 = 3 + 1;
+T12 = p + 1;
+Stack[T12] = T9;
+T12 = T12 + 1;
+Stack[T12] = T10;
+T12 = T12 + 1;
+Stack[T12] = T11;
 p = p + 0;
 call main_func2_integer_integer_integer;
-T9 = Stack[p];
+T12 = Stack[p];
 p = p - 0;
+p = p + 0;
+call main_func_empty;
+T13 = Stack[p];
+p = p - 0;
+T14 = T12 + T13;
+Stack[0] = T14;
+T15 = Stack[0];
+print("%i",T15);
+print("%c",10);
