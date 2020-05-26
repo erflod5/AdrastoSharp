@@ -29,7 +29,7 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.getValue(), right.getValue(), '+');
                         return new Retorno(temp, true, right.type.type == Types.DOUBLE ? right.type : left.type);
                     case Types.STRING:
-                        const tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.getValue());
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -50,7 +50,7 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.getValue(), right.getValue(), '+');
                         return new Retorno(temp, true, left.type);
                     case Types.STRING:
-                        const tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.getValue());
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -71,7 +71,7 @@ export class Plus extends Expression {
                         generator.addExpression(temp, left.getValue(), right.getValue(), '+');
                         return new Retorno(temp, true, right.type.type == Types.DOUBLE ? right.type : new Type(Types.INTEGER));
                     case Types.STRING:
-                        const tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.getValue());
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -85,7 +85,7 @@ export class Plus extends Expression {
                         break;
                 }
             case Types.STRING:
-                const tempAux = generator.newTemporal();
+                const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                 switch (right.type.type) {
                     case Types.INTEGER:
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
@@ -153,7 +153,7 @@ export class Plus extends Expression {
             case Types.BOOLEAN:
                 switch (right.type.type) {
                     case Types.STRING:
-                        const tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                         const lblTemp = generator.newLabel();
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addLabel(left.trueLabel);

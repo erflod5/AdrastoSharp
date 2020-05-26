@@ -1,22 +1,27 @@
-integer func(){
-    println(1);
-    return 20;
+integer num = 0;
+while(num <= 10){
+    print(factorial(num));
+    print(' ');
+    num = num + 1;
+}
+print('\n');
+num = 0;
+while(num <= 10){
+    print(fibonacci(num));
+    print(' ');
+    num = num + 1;
 }
 
-integer func2(integer a, integer b, integer c){
-    println(a + b + c);
-    func();
-    if(true){
-        if(true){
-            if(true){
-                if(true){
-                    return 20;
-                }
-            }
-        }
+integer factorial(integer n){
+    if(n == 0){
+        return 1;
     }
-    return 10;
+    return n * factorial(n - 1);
 }
 
-integer a = func2(1+1,2+1,3+1) + func();
-println(a);
+integer fibonacci(integer n){
+    if(n == 0 || n == 1){
+        return n;
+    }
+    return fibonacci(n-1) + fibonacci(n-2);
+}

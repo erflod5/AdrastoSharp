@@ -40,7 +40,7 @@ export class AccessId extends Expression {
                 //TODO variables por referencia
             }
             else{
-                const tempAux = generator.newTemporal();
+                const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                 generator.addExpression(tempAux,'p',symbol.position,'+');
                 generator.addGetStack(temp,tempAux);
                 if(symbol.type.type != Types.BOOLEAN) return new Retorno(temp,true,symbol.type,symbol);

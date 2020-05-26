@@ -1,70 +1,130 @@
-
-proc main_func_empty begin
-print("%i",1);
-print("%c",10);
-Stack[p] = 20;
-goto L0;
+Stack[0] = 0;
+/***** Inicia While *****/
 L0:
-end
-
-
-proc main_func2_integer_integer_integer begin
-T1 = p + 1;
-T0 = Stack[T1];
-T3 = p + 2;
-T2 = Stack[T3];
-T4 = T0 + T2;
-T6 = p + 3;
-T5 = Stack[T6];
-T7 = T4 + T5;
-print("%i",T7);
-print("%c",10);
-p = p + 4;
-call main_func_empty;
-T8 = Stack[p];
-p = p - 4;
-/***** Inicia If *****/
+T0 = Stack[0];
+if (T0 <= 10) goto L1;
 goto L2;
+L1:
+T1 = Stack[0];
+T2 = p + 2;
+Stack[T2] = T1;
+p = p + 1;
+call main_factorial_integer;
+T2 = Stack[p];
+p = p - 1;
+print("%i",T2);
+print("%c",32);
+T3 = Stack[0];
+T4 = T3 + 1;
+Stack[0] = T4;
+goto L0;
 L2:
-/***** Inicia If *****/
-goto L4;
+/***** Finaliza while *****/
+print("%c",10);
+Stack[0] = 0;
+/***** Inicia While *****/
+L3:
+T5 = Stack[0];
+if (T5 <= 10) goto L4;
+goto L5;
 L4:
+T6 = Stack[0];
+T7 = p + 2;
+Stack[T7] = T6;
+p = p + 1;
+call main_fibonacci_integer;
+T7 = Stack[p];
+p = p - 1;
+print("%i",T7);
+print("%c",32);
+T8 = Stack[0];
+T9 = T8 + 1;
+Stack[0] = T9;
+goto L3;
+L5:
+/***** Finaliza while *****/
+
+proc main_factorial_integer begin
 /***** Inicia If *****/
+T11 = p + 1;
+T10 = Stack[T11];
+if (T10 == 0) goto L7;
+goto L8;
+L7:
+Stack[p] = 1;
+goto L6;
+L8:
+T13 = p + 1;
+T12 = Stack[T13];
+/***** Inicia guardado de temporales *****/
+T14 = p + 2;
+Stack[T14] = T12;
+/***** Fin guardado de temporales *****/
+T16 = p + 1;
+T15 = Stack[T16];
+T17 = T15 - 1;
+T18 = p + 4;
+Stack[T18] = T17;
+p = p + 3;
+call main_factorial_integer;
+T18 = Stack[p];
+p = p - 3;
+/***** Inicia recuperado de temporales *****/
+T19 = p + 2;
+T12 = Stack[T19];
+/***** Finaliza recuperado de temporales *****/
+T20 = T12 * T18;
+Stack[p] = T20;
 goto L6;
 L6:
-/***** Inicia If *****/
-goto L8;
-L8:
-Stack[p] = 20;
-goto L1;
-L9:
-L7:
-L5:
-L3:
-Stack[p] = 10;
-goto L1;
-L1:
 end
 
-T9 = 1 + 1;
-T10 = 2 + 1;
-T11 = 3 + 1;
-T12 = p + 1;
-Stack[T12] = T9;
-T12 = T12 + 1;
-Stack[T12] = T10;
-T12 = T12 + 1;
-Stack[T12] = T11;
-p = p + 0;
-call main_func2_integer_integer_integer;
-T12 = Stack[p];
-p = p - 0;
-p = p + 0;
-call main_func_empty;
-T13 = Stack[p];
-p = p - 0;
-T14 = T12 + T13;
-Stack[0] = T14;
-T15 = Stack[0];
-print("%i",T15);
-print("%c",10);
+
+proc main_fibonacci_integer begin
+/***** Inicia If *****/
+T22 = p + 1;
+T21 = Stack[T22];
+if (T21 == 0) goto L10;
+goto L12;
+L12:
+T24 = p + 1;
+T23 = Stack[T24];
+if (T23 == 1) goto L10;
+goto L11;
+L10:
+T26 = p + 1;
+T25 = Stack[T26];
+Stack[p] = T25;
+goto L9;
+L11:
+T28 = p + 1;
+T27 = Stack[T28];
+T29 = T27 - 1;
+T30 = p + 3;
+Stack[T30] = T29;
+p = p + 2;
+call main_fibonacci_integer;
+T30 = Stack[p];
+p = p - 2;
+/***** Inicia guardado de temporales *****/
+T31 = p + 2;
+Stack[T31] = T30;
+/***** Fin guardado de temporales *****/
+T33 = p + 1;
+T32 = Stack[T33];
+T34 = T32 - 2;
+T35 = p + 4;
+Stack[T35] = T34;
+p = p + 3;
+call main_fibonacci_integer;
+T35 = Stack[p];
+p = p - 3;
+/***** Inicia recuperado de temporales *****/
+T36 = p + 2;
+T30 = Stack[T36];
+/***** Finaliza recuperado de temporales *****/
+T37 = T30 + T35;
+Stack[p] = T37;
+goto L9;
+L9:
+end

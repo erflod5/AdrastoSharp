@@ -23,12 +23,12 @@ export class AssignmentFunc extends Expression{
                 throw new Error(this.line,this.column,'Semantico',`No se encontro la funcion: ${this.id}`);
             const paramsValues = new Array<Retorno>();
             const generator = Generator.getInstance();
+            const size = generator.saveTemps(enviorement); //Guardo temporales
             this.params.forEach((param)=>{
                 paramsValues.push(param.compile(enviorement));
             })
             //TODO comprobar parametros correctos
-            //TODO guardado de temporales
-            const temp = generator.newTemporal();
+            const temp = generator.newTemporal(); generator.freeTemp(temp);
             //Paso de parametros en cambio simulado
             if(paramsValues.length != 0){
                 generator.addExpression(temp,'p',enviorement.size + 1,'+'); //+1 porque la posicion 0 es para el retorno;
@@ -44,8 +44,8 @@ export class AssignmentFunc extends Expression{
             generator.addCall(symFunc.uniqueId);
             generator.addGetStack(temp,'p');
             generator.addAntEnv(enviorement.size);
-    
-            //TODO recuperacion de temporales
+            generator.recoverTemps(enviorement,size);
+            generator.addTemp(temp);
             return new Retorno(temp,true,symFunc.type);
         }
         else{

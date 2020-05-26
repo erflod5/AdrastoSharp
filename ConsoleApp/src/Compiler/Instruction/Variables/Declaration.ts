@@ -42,7 +42,7 @@ export class Declaration extends Instruction {
                 }
             }
             else{
-                const temp = generator.newTemporal();
+                const temp = generator.newTemporal(); generator.freeTemp(temp);
                 generator.addExpression(temp,'p',newVar.position,'+');
                 if(this.type.type == Types.BOOLEAN){
                     const templabel = generator.newLabel();

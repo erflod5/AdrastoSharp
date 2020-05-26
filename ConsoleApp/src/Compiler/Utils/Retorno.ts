@@ -1,5 +1,6 @@
 import { Symbol } from "../SymbolTable/Symbol";
 import { Type } from "./Type";
+import { Generator } from "../Generator/Generator";
 
 export class Retorno{
     private value : string;
@@ -18,7 +19,7 @@ export class Retorno{
     }
 
     public getValue(){
-        //TODO eliminar de lista de temporales
+        Generator.getInstance().freeTemp(this.value);
         return this.value;
     }
 }
