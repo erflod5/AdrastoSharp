@@ -4,6 +4,8 @@ import { Symbol } from "./Symbol";
 import { Type, Types } from "../Utils/Type";
 import { Error } from "../Utils/Error";
 import { FunctionSt } from "../Instruction/Functions/FunctionSt";
+import { StructSt } from "../Instruction/Functions/StructSt";
+import { Param } from "../Utils/Param";
 
 export class Enviorement {
     functions: Map<string, SymbolFunction>;
@@ -55,6 +57,14 @@ export class Enviorement {
         return true;
     }
 
+    public addStruct(id: string, size: number, params: Array<Param>) : boolean{
+        if(this.structs.has(id.toLocaleLowerCase())){
+            return false;
+        }
+        this.structs.set(id.toLowerCase(),new SymbolStruct(id.toLowerCase(),size,params));
+        return true;
+    }
+
     public getVar(id: string) : Symbol | null{
         let enviorement : Enviorement | null = this;
         id = id.toLowerCase();
@@ -86,6 +96,19 @@ export class Enviorement {
     }
 
     public structExists(id: string){
-        return this.structs.get(id.toLocaleLowerCase()) == undefined;
+        return this.structs.get(id.toLocaleLowerCase()) != undefined;
+    }
+
+    public searchStruct(id: string) : SymbolStruct | null{
+        let enviorement : Enviorement | null = this;
+        id = id.toLowerCase();
+        while(enviorement != null){
+            const sym = enviorement.structs.get(id);
+            if(sym != undefined){
+                return sym;
+            }
+            enviorement = enviorement.anterior;
+        }
+        return null;
     }
 }

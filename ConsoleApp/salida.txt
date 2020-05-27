@@ -128,3 +128,12 @@ Stack[p] = T37;
 goto L9;
 L9:
 end
+
+T38 = h  ;
+Heap[h] = 0;
+h = h + 1;
+Heap[h] = 0;
+h = h + 1;
+Heap[h] = -1;
+h = h + 1;
+Stack[1] = T38;

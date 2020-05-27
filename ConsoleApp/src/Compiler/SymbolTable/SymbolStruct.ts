@@ -1,12 +1,13 @@
+import { Param } from "../Utils/Param";
 
 export class SymbolStruct{
-    type : any;
     identifier : string;
-    position : number;
+    size : number;
+    attributes : Array<Param>;
 
-    constructor(type: any, identifier: string, position: number){
-        this.type = type;
+    constructor(identifier: string, size: number,attributs: Array<Param>){
         this.identifier = identifier;
-        this.position = position;
+        this.size = size;
+        this.attributes = attributs;
     }
 }

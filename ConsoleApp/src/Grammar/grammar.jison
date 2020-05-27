@@ -5,6 +5,7 @@
     const {InstrBody} = require('../Compiler/Instruction/Control/InstrBody');
     const {Print} = require('../Compiler/Instruction/Functions/Print');
     const {FunctionSt} = require('../Compiler/Instruction/Functions/FunctionSt');
+    const {StructSt} = require('../Compiler/Instruction/Functions/StructSt');
 
     const {Break} = require('../Compiler/Instruction/Transfer/Break');
     const {Continue} = require('../Compiler/Instruction/Transfer/Continue');
@@ -22,6 +23,7 @@
 
     const {PrimitiveL} = require('../Compiler/Expression/Literal/PrimitiveL');
     const {StringL} = require('../Compiler/Expression/Literal/StringL');
+    const {NewStruct} = require('../Compiler/Expression/Literal/NewStruct');
 
     const {And} = require('../Compiler/Expression/Logical/And');
     const {Not} = require('../Compiler/Expression/Logical/Not');
@@ -91,6 +93,9 @@ decimal {entero}"."{entero}
 "println"             return 'PRINTLN'
 "continue"            return 'CONTINUE'
 "break"               return 'BREAK'
+"define"              return 'DEFINE'
+"as"                  return 'AS'
+"strc"                return 'STRC'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*       return 'ID'
 [\']([^\t\'\"\n]|(\\\")|(\\n)|(\\\')|(\\t))?[\'] { yytext = yytext.substr(1,yyleng-2).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LCHAR'; }
@@ -120,28 +125,32 @@ decimal {entero}"."{entero}
 %%
 
 Init 
-    : GlobalInstr EOF {
+    : GlobalList EOF {
         return $1;
     }
 ;
 
-GlobalInstr 
-    : GlobalInstr Instruction {
+GlobalList 
+    : GlobalList GlobalInstr {
         $$ = $1; 
         $$.push($2);
     }
-    | GlobalInstr FunctionSt {
-        $$ = $1; 
-        $$.push($2);
-    }
-    | FunctionSt {
-        $$ = [$1]; 
-    }
-    | Instruction{
+    | GlobalInstr{
         $$ = [$1]; 
     }
 ;
 
+GlobalInstr
+    : Instruction {
+        $$ = $1;
+    }
+    | FunctionSt {
+        $$ = $1;
+    }
+    | StructSt ';'{
+        $$ = $1;
+    }
+;
 
 Instructions
     : Instructions Instruction {
@@ -187,7 +196,7 @@ Instruction
     | Assignment ';' {
         $$ = $1;
     }
-    | Call ';'{
+    | Call ';' {
         $$ = $1;
     }
 ;
@@ -204,6 +213,12 @@ FunctionSt
     }
     | ID ID '(' Params ')' InstructionSt {
         $$ = new FunctionSt(new Type(Types.STRUCT,$1),$2,$4,$6,@1.first_line,@1.first_column);
+    }
+;
+
+StructSt
+    : DEFINE ID AS '[' ParamList ']' {
+        $$ = new StructSt($2,$5,@1.first_line,@1.first_column);
     }
 ;
 
@@ -231,7 +246,7 @@ Param
         $$ = new Param($2,$1);
     }
     | ID ID{
-        $$ = new Param($2,new Type(Type.STRUCT,$1));
+        $$ = new Param($2,new Type(Types.STRUCT,$1));
     }
 ;
 
@@ -409,6 +424,9 @@ Expression
     | Access {
         $$ = $1;
     }
+    | STRC ID '(' ')' {
+        $$ = new NewStruct($2,@1.first_line,@1.first_column);
+    } 
 ;
 
 Access

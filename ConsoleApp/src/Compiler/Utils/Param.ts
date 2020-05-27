@@ -15,4 +15,8 @@ export class Param {
         }
         return this.type.type;
     }
+
+    toString() : string{
+        return `{id: ${this.id}, type: ${this.type}}`;
+    }
 }

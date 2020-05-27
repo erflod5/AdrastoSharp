@@ -1,3 +1,5 @@
+import { SymbolStruct } from "../SymbolTable/SymbolStruct";
+
 export enum Types{
     INTEGER = "integer",
     DOUBLE = "double",
@@ -13,9 +15,11 @@ export enum Types{
 export class Type{
     type : Types;
     typeId : string;
+    struct : SymbolStruct | null;
 
-    constructor(type: Types, typeId: string = ''){
+    constructor(type: Types, typeId: string = '', struct : SymbolStruct | null = null){
         this.type = type;
         this.typeId = typeId;
+        this.struct = struct;
     }
 }
