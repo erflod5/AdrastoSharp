@@ -24,7 +24,7 @@ export class Declaration extends Instruction {
             throw new Error(this.line,this.column,'Semantico',`Tipos de datos diferentes ${this.type.type}, ${value.type.type}`);
         }
         this.idList.forEach((id)=>{
-            const newVar = enviorement.addVar(id,this.type,false,false);
+            const newVar = enviorement.addVar(id,value.type,false,false);
             if(!newVar) throw new Error(this.line,this.column,'Semantico',`La variable: ${id} ya existe en este ambito;`);
         
             if(newVar.isGlobal){

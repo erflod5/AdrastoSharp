@@ -25,8 +25,12 @@ export class StructSt extends Instruction {
         this.attributes.forEach((param)=>{
             if(set.has(param.id.toLowerCase()))
                 throw new Error(this.line,this.column,'Semantico',`Ya existe un parametro con el id ${param.id}`);
-            if(param.type.type == Types.STRUCT && !enviorement.structExists(param.type.typeId))
-                throw new Error(this.line,this.column,'Semantico',`No existe el struct ${param.type.typeId}`);
+            if(param.type.type == Types.STRUCT) {
+                const struct = enviorement.structExists(param.type.typeId);
+                if(!struct)
+                    throw new Error(this.line,this.column,'Semantico',`No existe el struct ${param.type.typeId}`);
+                param.type.struct = struct;
+            }
             set.add(param.id.toLowerCase());
         });
     }

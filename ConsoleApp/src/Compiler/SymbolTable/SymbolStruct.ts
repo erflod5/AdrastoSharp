@@ -10,4 +10,14 @@ export class SymbolStruct{
         this.size = size;
         this.attributes = attributs;
     }
+
+    getAttribute(id: string) : {index : number, value: Param | null}{
+        for(let i = 0; i < this.attributes.length; i++){
+            const value = this.attributes[i];
+            if(value.id == id){
+                return {index: i,value : value};
+            }
+        }
+        return {index: -1,value : null};
+    }
 }

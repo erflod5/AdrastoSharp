@@ -1,31 +1,14 @@
-integer num = 0;
-while(num <= 10){
-    print(factorial(num));
-    print(' ');
-    num = num + 1;
-}
-print('\n');
-num = 0;
-while(num <= 10){
-    print(fibonacci(num));
-    print(' ');
-    num = num + 1;
-}
-
-integer factorial(integer n){
-    if(n == 0){
-        return 1;
-    }
-    return n * factorial(n - 1);
-}
-
-integer fibonacci(integer n){
-    if(n == 0 || n == 1){
-        return n;
-    }
-    return fibonacci(n-1) + fibonacci(n-2);
-}
-
-define estudiante as [integer nombre, char sexo,estudiante next];
+define estudiante as [integer edad, char sexo,estudiante next];
 
 estudiante e1 = strc estudiante();
+estudiante e2 = strc estudiante();
+
+
+e1.edad = 100;
+e1.sexo = 'M';
+e1.next = e2;
+
+e2.edad = 300;
+e2.sexo = 'M';
+
+println(e1.next.edad);

@@ -96,7 +96,7 @@ export class Enviorement {
     }
 
     public structExists(id: string){
-        return this.structs.get(id.toLocaleLowerCase()) != undefined;
+        return this.structs.get(id.toLocaleLowerCase());
     }
 
     public searchStruct(id: string) : SymbolStruct | null{

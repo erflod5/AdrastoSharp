@@ -76,6 +76,7 @@ decimal {entero}"."{entero}
 "}"                   return 'RBRACE'
 "{"                   return 'LBRACE'
 ","                   return ','
+"."                   return '.'
 "integer"             return 'INTEGER'
 "double"              return 'DOUBLE'
 "boolean"             return 'BOOLEAN'
@@ -299,7 +300,10 @@ Assignment
 ;
 
 AssignmentId
-    : ID {
+    : AssignmentId '.' ID {
+        $$ = new AssignmentId($3,$1,@1.first_line,@1.first_column);
+    }
+    | ID {
         $$ = new AssignmentId($1,null,@1.first_line,@1.first_column);
     }
 ;
@@ -439,7 +443,10 @@ Access
 ;
 
 AccessId 
-    : ID {
+    : AccessId '.' ID {
+        $$ = new AccessId($3,$1,@1.first_line,@1.first_column);
+    }
+    | ID {
         $$ = new AccessId($1,null,@1.first_line,@1.first_column);
     }
 ;
