@@ -1,6 +1,5 @@
 import { Instruction } from "../../Abstract/Instruction";
 import { Enviorement } from "../../SymbolTable/Enviorement";
-import { Generator } from "../../Generator/Generator";
 
 export class InstrBody extends Instruction {
     private instructions: Array<Instruction> | null;
@@ -11,7 +10,7 @@ export class InstrBody extends Instruction {
     }
 
     compile(enviorement: Enviorement): any {
-        const newEnv = new Enviorement(enviorement);
+        const newEnv = enviorement.actualFunc == null ? new Enviorement(enviorement) : enviorement;
         this.instructions?.forEach((instruction)=>{
             try {
                 instruction.compile(newEnv);

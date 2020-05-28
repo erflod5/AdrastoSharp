@@ -4,6 +4,8 @@
     const {While} = require('../Compiler/Instruction/Control/While');
     const {InstrBody} = require('../Compiler/Instruction/Control/InstrBody');
     const {Print} = require('../Compiler/Instruction/Functions/Print');
+    const {FunctionSt} = require('../Compiler/Instruction/Functions/FunctionSt');
+    const {StructSt} = require('../Compiler/Instruction/Functions/StructSt');
 
     const {Break} = require('../Compiler/Instruction/Transfer/Break');
     const {Continue} = require('../Compiler/Instruction/Transfer/Continue');
@@ -21,6 +23,7 @@
 
     const {PrimitiveL} = require('../Compiler/Expression/Literal/PrimitiveL');
     const {StringL} = require('../Compiler/Expression/Literal/StringL');
+    const {NewStruct} = require('../Compiler/Expression/Literal/NewStruct');
 
     const {And} = require('../Compiler/Expression/Logical/And');
     const {Not} = require('../Compiler/Expression/Logical/Not');
@@ -33,9 +36,10 @@
 
     const {AccessId} = require('../Compiler/Expression/Access/AccessId');
     const {AssignmentId} = require('../Compiler/Expression/Assignment/AssignmentId');
+    const {AssignmentFunc} = require('../Compiler/Expression/Assignment/AssignmentFunc');
 
     const {Types,Type} = require('../Compiler/Utils/Type');
-
+    const {Param} = require('../Compiler/Utils/Param');
 %}
 
 %lex
@@ -72,6 +76,7 @@ decimal {entero}"."{entero}
 "}"                   return 'RBRACE'
 "{"                   return 'LBRACE'
 ","                   return ','
+"."                   return '.'
 "integer"             return 'INTEGER'
 "double"              return 'DOUBLE'
 "boolean"             return 'BOOLEAN'
@@ -89,6 +94,9 @@ decimal {entero}"."{entero}
 "println"             return 'PRINTLN'
 "continue"            return 'CONTINUE'
 "break"               return 'BREAK'
+"define"              return 'DEFINE'
+"as"                  return 'AS'
+"strc"                return 'STRC'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*       return 'ID'
 [\']([^\t\'\"\n]|(\\\")|(\\n)|(\\\')|(\\t))?[\'] { yytext = yytext.substr(1,yyleng-2).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LCHAR'; }
@@ -118,8 +126,30 @@ decimal {entero}"."{entero}
 %%
 
 Init 
-    : Instructions EOF {
+    : GlobalList EOF {
         return $1;
+    }
+;
+
+GlobalList 
+    : GlobalList GlobalInstr {
+        $$ = $1; 
+        $$.push($2);
+    }
+    | GlobalInstr{
+        $$ = [$1]; 
+    }
+;
+
+GlobalInstr
+    : Instruction {
+        $$ = $1;
+    }
+    | FunctionSt {
+        $$ = $1;
+    }
+    | StructSt ';'{
+        $$ = $1;
     }
 ;
 
@@ -155,10 +185,19 @@ Instruction
     | CONTINUE ';'{
         $$ = new Continue(@1.first_line,@1.first_column);
     }
+    | RETURN ';' {
+        $$ = new Return(null,@1.first_line,@1.first_column);
+    }
+    | RETURN Expression ';'{
+        $$ = new Return($2,@1.first_line,@1.first_column);
+    }
     | Declaration ';'{
         $$ = $1;
     }
     | Assignment ';' {
+        $$ = $1;
+    }
+    | Call ';' {
         $$ = $1;
     }
 ;
@@ -166,6 +205,49 @@ Instruction
 InstructionSt 
     : LBRACE Instructions RBRACE {
         $$ = new InstrBody($2,@1.first_line,@1.first_column);
+    }
+;
+
+FunctionSt
+    : Type ID '(' Params ')' InstructionSt {
+        $$ = new FunctionSt($1,$2,$4,$6,@1.first_line,@1.first_column);
+    }
+    | ID ID '(' Params ')' InstructionSt {
+        $$ = new FunctionSt(new Type(Types.STRUCT,$1),$2,$4,$6,@1.first_line,@1.first_column);
+    }
+;
+
+StructSt
+    : DEFINE ID AS '[' ParamList ']' {
+        $$ = new StructSt($2,$5,@1.first_line,@1.first_column);
+    }
+;
+
+Params
+    : ParamList {
+        $$ = $1;
+    }
+    | /*epsilon*/ {
+        $$ = [];
+    }
+;
+
+ParamList
+    : ParamList ',' Param {
+        $$ = $1;
+        $$.push($3);
+    }
+    | Param {
+        $$ = [$1];
+    }
+;
+
+Param
+    : Type ID {
+        $$ = new Param($2,$1);
+    }
+    | ID ID{
+        $$ = new Param($2,new Type(Types.STRUCT,$1));
     }
 ;
 
@@ -218,8 +300,36 @@ Assignment
 ;
 
 AssignmentId
-    : ID {
+    : AssignmentId '.' ID {
+        $$ = new AssignmentId($3,$1,@1.first_line,@1.first_column);
+    }
+    | ID {
         $$ = new AssignmentId($1,null,@1.first_line,@1.first_column);
+    }
+;
+
+Call
+    : ID '(' ParamsExpression ')' {
+        $$ = new AssignmentFunc($1,$3,null,@1.first_line,@1.first_column);
+    }
+;
+
+ParamsExpression
+    : ExpressionList {
+        $$ =  $1;
+    }
+    | /*epsilon*/ {
+        $$ = [];
+    }
+;
+
+ExpressionList
+    : ExpressionList ',' Expression {
+        $$ = $1;
+        $$.push($3);
+    }
+    | Expression {
+        $$ = [$1];
     }
 ;
 
@@ -315,13 +425,34 @@ Expression
     | '(' Expression ')' { 
         $$ = $2; 
     }
-    | AccessId {
+    | Access {
+        $$ = $1;
+    }
+    | STRC ID '(' ')' {
+        $$ = new NewStruct($2,@1.first_line,@1.first_column);
+    } 
+;
+
+Access
+    : AccessId {
+        $$ = $1;
+    }
+    | AccessFunc{
         $$ = $1;
     }
 ;
 
 AccessId 
-    : ID {
+    : AccessId '.' ID {
+        $$ = new AccessId($3,$1,@1.first_line,@1.first_column);
+    }
+    | ID {
         $$ = new AccessId($1,null,@1.first_line,@1.first_column);
+    }
+;
+
+AccessFunc
+    : Call {
+        $$ = $1;
     }
 ;

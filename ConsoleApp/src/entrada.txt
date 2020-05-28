@@ -1,11 +1,14 @@
-integer a = 10;
-while(a > 0){
-    println(a);
-    a = a - 1;
-}
+define estudiante as [integer edad, char sexo,estudiante next];
 
-if(a == 0){
-    integer b = 1;
-    b = b + 1;
-    println(b);
-}
+estudiante e1 = strc estudiante();
+estudiante e2 = strc estudiante();
+
+
+e1.edad = 100;
+e1.sexo = 'M';
+e1.next = e2;
+
+e2.edad = 300;
+e2.sexo = 'M';
+
+println(e1.next.edad);

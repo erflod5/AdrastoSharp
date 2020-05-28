@@ -24,7 +24,7 @@ export class Declaration extends Instruction {
             throw new Error(this.line,this.column,'Semantico',`Tipos de datos diferentes ${this.type.type}, ${value.type.type}`);
         }
         this.idList.forEach((id)=>{
-            const newVar = enviorement.addVar(id,this.type,false,false);
+            const newVar = enviorement.addVar(id,value.type,false,false);
             if(!newVar) throw new Error(this.line,this.column,'Semantico',`La variable: ${id} ya existe en este ambito;`);
         
             if(newVar.isGlobal){
@@ -42,7 +42,7 @@ export class Declaration extends Instruction {
                 }
             }
             else{
-                const temp = generator.newTemporal();
+                const temp = generator.newTemporal(); generator.freeTemp(temp);
                 generator.addExpression(temp,'p',newVar.position,'+');
                 if(this.type.type == Types.BOOLEAN){
                     const templabel = generator.newLabel();

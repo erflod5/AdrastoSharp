@@ -1,24 +1,38 @@
+import { Enviorement } from "../SymbolTable/Enviorement";
+
 export class Generator{
     private static generator: Generator;
     private temporal : number;
     private label : number;
     private code : string[];
-    private tempStorage : Map<string,string>;
+    private tempStorage : Set<string>;
 
     private constructor(){
         this.temporal = this.label = 0;
         this.code = new Array();
-        this.tempStorage = new Map();
+        this.tempStorage = new Set();
     }
 
     public static getInstance(){
         return this.generator || (this.generator = new this());
     }
 
+    public getTempStorage(){
+        return this.tempStorage;
+    }
+
+    public clearTempStorage(){
+        this.tempStorage.clear();
+    }
+
+    public setTempStorage(tempStorage : Set<string>){
+        this.tempStorage = tempStorage;
+    }
+
     public clearCode(){
         this.temporal = this.label = 0;
         this.code = new Array();
-        this.tempStorage = new Map();
+        this.tempStorage = new Set();
     }
 
     public addCode(code : string){
@@ -30,7 +44,9 @@ export class Generator{
     }
 
     public newTemporal() : string{
-        return 'T' + this.temporal++;
+        const temp = 'T' + this.temporal++
+        this.tempStorage.add(temp);
+        return temp;
     }
 
     public newLabel() : string{
@@ -82,15 +98,15 @@ export class Generator{
     }
 
     public addCall(id: string){
-        this.code.push(`call ${id}();`);
+        this.code.push(`call ${id};`);
     }
 
     public addBegin(id: string){
-        this.code.push('begin ')
+        this.code.push(`\nproc ${id} begin`);
     }
 
     public addEnd(){
-        this.code.push('end');
+        this.code.push('end\n');
     }
 
     public addPrint(format: string, value: any){
@@ -121,5 +137,54 @@ export class Generator{
 
     public addComment(comment: string){
         this.code.push(`/***** ${comment} *****/`);
+    }
+
+    public freeTemp(temp: string){
+        if(this.tempStorage.has(temp)){
+            this.tempStorage.delete(temp);
+        }
+    }
+
+    public addTemp(temp: string){
+        if(!this.tempStorage.has(temp))
+            this.tempStorage.add(temp);
+    }
+
+    public saveTemps(enviorement: Enviorement) : number{
+        if(this.tempStorage.size > 0){
+            const temp = this.newTemporal(); this.freeTemp(temp);
+            let size = 0;
+
+            this.addComment('Inicia guardado de temporales');
+            this.addExpression(temp,'p',enviorement.size,'+');
+            this.tempStorage.forEach((value)=>{
+                size++;
+                this.addSetStack(temp,value);
+                if(size !=  this.tempStorage.size)
+                    this.addExpression(temp,temp,'1','+');
+            });
+            this.addComment('Fin guardado de temporales');
+        }
+        let ptr = enviorement.size;
+        enviorement.size = ptr + this.tempStorage.size;
+        return ptr;
+    }
+
+    public recoverTemps(enviorement: Enviorement, pos: number){
+        if(this.tempStorage.size > 0){
+            const temp = this.newTemporal(); this.freeTemp(temp);
+            let size = 0;
+
+            this.addComment('Inicia recuperado de temporales');
+            this.addExpression(temp,'p',pos,'+');
+            this.tempStorage.forEach((value)=>{
+                size++;
+                this.addGetStack(value,temp);
+                if(size !=  this.tempStorage.size)
+                    this.addExpression(temp,temp,'1','+');
+            });
+            this.addComment('Finaliza recuperado de temporales');
+            enviorement.size = pos;
+        }
     }
 }

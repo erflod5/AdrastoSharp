@@ -16,7 +16,7 @@ export abstract class Instruction{
         //TODO casteos implicitos
         if(type1.type == type2.type){
             if(type1.type == Types.STRUCT){
-                return type1.typeId === type2.typeId;
+                return type1.typeId.toLocaleLowerCase() === type2.typeId.toLocaleLowerCase();
             }
             return true;
         }

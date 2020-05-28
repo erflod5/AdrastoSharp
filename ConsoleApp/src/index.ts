@@ -1,6 +1,7 @@
 import { Enviorement } from "./Compiler/SymbolTable/Enviorement";
 import { Instruction } from "./Compiler/Abstract/Instruction";
 import { Generator } from "./Compiler/Generator/Generator";
+import { FunctionSt } from "./Compiler/Instruction/Functions/FunctionSt";
 
 const fs = require('fs');
 const parser = require('./Grammar/grammar');
@@ -10,6 +11,13 @@ try{
     let ast = parser.parse(entrada.toString());
     let env = new Enviorement(null);
     
+    //Primera pasada, solo funciones y structs pendientes
+    ast.forEach( (element : Instruction) => {
+        if(element instanceof FunctionSt)
+            element.compile(env);
+    });
+
+    //Segunda pasada ejecuta todo
     ast.forEach( (element : Instruction) => {
         element.compile(env);
     });

@@ -64,7 +64,7 @@ export class Equals extends Expression {
                 switch (right.type.type) {
                     case Types.STRING: {
                         const temp = generator.newTemporal();
-                        const tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                         generator.addExpression(tempAux, 'p', enviorement.size + 1, '+');
                         generator.addSetStack(tempAux, left.getValue());
                         generator.addExpression(tempAux, tempAux, '1', '+');

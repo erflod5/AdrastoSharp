@@ -25,7 +25,7 @@ export class Pot extends Expression{
                 switch (right.type.type) {
                     case Types.INTEGER:
                     case Types.CHAR:
-                        const tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.getValue());
                         generator.addExpression(tempAux,tempAux,'1','+');
@@ -42,7 +42,7 @@ export class Pot extends Expression{
                 switch (right.type.type) {
                     case Types.INTEGER:
                     case Types.CHAR:
-                        const tempAux = generator.newTemporal();
+                        const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
                         generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
                         generator.addSetStack(tempAux,left.getValue());
                         generator.addExpression(tempAux,tempAux,'1','+');
