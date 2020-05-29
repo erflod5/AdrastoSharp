@@ -46,7 +46,7 @@ export class AssignmentId extends Expression {
 
             const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
             const temp = generator.newTemporal();
-            if (anterior.symbol != null) {
+            if (anterior.symbol != null && !anterior.symbol.isHeap) {
                 //TODO variables por referencia
                 generator.addGetStack(tempAux, anterior.getValue());
             }

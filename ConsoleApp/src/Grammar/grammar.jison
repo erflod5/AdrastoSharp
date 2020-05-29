@@ -13,6 +13,7 @@
 
     const {Declaration} = require('../Compiler/Instruction/Variables/Declaration');
     const {Assignment} = require('../Compiler/Instruction/Variables/Assignment');
+    const {Call} = require('../Compiler/Instruction/Variables/Call');
 
     const {Div} = require('../Compiler/Expression/Arithmetic/Div');
     const {Minus} = require('../Compiler/Expression/Arithmetic/Minus');
@@ -61,7 +62,6 @@ decimal {entero}"."{entero}
 "+"                   return '+'
 "||"                  return '||'
 "&&"                  return '&&'
-"!"                   return '!'
 "<="                  return '<='
 ">="                  return '>='
 "<"                   return '<'
@@ -69,6 +69,7 @@ decimal {entero}"."{entero}
 "=="                  return '=='
 "!="                  return '!='
 "="                   return '='
+"!"                   return '!'
 "("                   return '('
 ")"                   return ')'  
 "["                   return '['
@@ -97,6 +98,7 @@ decimal {entero}"."{entero}
 "define"              return 'DEFINE'
 "as"                  return 'AS'
 "strc"                return 'STRC'
+"null"                return 'NULL'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*       return 'ID'
 [\']([^\t\'\"\n]|(\\\")|(\\n)|(\\\')|(\\t))?[\'] { yytext = yytext.substr(1,yyleng-2).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LCHAR'; }
@@ -198,7 +200,7 @@ Instruction
         $$ = $1;
     }
     | Call ';' {
-        $$ = $1;
+        $$ = new Call($1,@1.first_line,@1.first_column);
     }
 ;
 
@@ -215,6 +217,10 @@ FunctionSt
     | ID ID '(' Params ')' InstructionSt {
         $$ = new FunctionSt(new Type(Types.STRUCT,$1),$2,$4,$6,@1.first_line,@1.first_column);
     }
+    | VOID ID '(' Params ')' InstructionSt {
+        $$ = new FunctionSt(new Type(Types.VOID,$1),$2,$4,$6,@1.first_line,@1.first_column);
+    }
+    
 ;
 
 StructSt
@@ -422,6 +428,9 @@ Expression
     | LSTRING {  
         $$ = new StringL(Types.STRING,$1,@1.first_line,@1.first_column);
     }  
+    | NULL {
+        $$ = new PrimitiveL(Types.NULL,'-1',@1.first_line,@1.first_column);
+    }
     | '(' Expression ')' { 
         $$ = $2; 
     }

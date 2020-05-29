@@ -3,6 +3,7 @@ import { Expression } from "../../Abstract/Expression";
 import { Enviorement } from "../../SymbolTable/Enviorement";
 import { Types } from "../../Utils/Type";
 import { Generator } from "../../Generator/Generator";
+import { Error } from "../../Utils/Error";
 
 export class Print extends Instruction {
     private value: Expression;
@@ -45,10 +46,8 @@ export class Print extends Instruction {
             case Types.NULL:
                 generator.addPrintNull();
                 break;
-            case Types.STRUCT:
-            //TODO print struct
-            case Types.ARRAY:
-            //TODO print array
+            default: 
+                throw new Error(this.line,this.column,'Semantico',`No se puede imprimir el tipo de dato ${value.type.type}`);
         }
         if(this.isLine){
             generator.addPrint('c',10);

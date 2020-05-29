@@ -57,6 +57,7 @@ export class AccessId extends Expression {
             }
         }
         else {
+            //TODO faltan booleanos
             const anterior = this.anterior.compile(enviorement);
             const symStruct = anterior.type.struct;
             if (anterior.type.type != Types.STRUCT || symStruct == null)

@@ -25,6 +25,7 @@ export class FunctionSt extends Instruction{
         if(this.preCompile){
             this.preCompile = false;
             this.validateParams(enviorement);
+            this.validateType(enviorement);
             const uniqueId = this.uniqueId(enviorement);
             if(!enviorement.addFunc(this,uniqueId))
                 throw new Error(this.line,this.column,'Semantico',`Ya existe una funcion con el id: ${this.id}`);
@@ -43,12 +44,12 @@ export class FunctionSt extends Instruction{
                 newEnv.addVar(param.id,param.type,false,false);
             });
             generator.clearTempStorage();
-
+            generator.isFunc = '\t';
             generator.addBegin(symbolFunc.uniqueId);
             this.body.compile(newEnv);
             generator.addLabel(returnLbl);
             generator.addEnd();
-
+            generator.isFunc = '';
             generator.setTempStorage(tempStorage);
         }
     }
@@ -66,6 +67,15 @@ export class FunctionSt extends Instruction{
             }
             set.add(param.id.toLowerCase());
         });
+    }
+
+    private validateType(enviorement: Enviorement){
+        if(this.type.type == Types.STRUCT){
+            const struct = enviorement.searchStruct(this.type.typeId);
+            if(!struct)
+                throw new Error(this.line,this.column,'Semantico',`No existe el struct ${this.type.typeId}`);
+            this.type.struct = struct;
+        }
     }
 
     public uniqueId(enviorement: Enviorement) : string{

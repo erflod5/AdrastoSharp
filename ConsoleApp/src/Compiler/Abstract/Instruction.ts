@@ -20,6 +20,11 @@ export abstract class Instruction{
             }
             return true;
         }
+        else if(type1.type == Types.STRUCT || type2.type == Types.STRUCT){
+            if(type1.type == Types.NULL || type2.type == Types.NULL){
+                return true;
+            }
+        }
         return false;
     }
 }

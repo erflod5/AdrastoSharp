@@ -23,8 +23,9 @@ export class Declaration extends Instruction {
         if(!this.sameType(this.type,value.type)){
             throw new Error(this.line,this.column,'Semantico',`Tipos de datos diferentes ${this.type.type}, ${value.type.type}`);
         }
+        this.validateType(enviorement);
         this.idList.forEach((id)=>{
-            const newVar = enviorement.addVar(id,value.type,false,false);
+            const newVar = enviorement.addVar(id,value.type.type == Types.NULL ? this.type : value.type,false,false);
             if(!newVar) throw new Error(this.line,this.column,'Semantico',`La variable: ${id} ya existe en este ambito;`);
         
             if(newVar.isGlobal){
@@ -58,6 +59,15 @@ export class Declaration extends Instruction {
                 }
             }
         });
+    }
+
+    private validateType(enviorement: Enviorement){
+        if(this.type.type == Types.STRUCT){
+            const struct = enviorement.searchStruct(this.type.typeId);
+            if(!struct)
+                throw new Error(this.line,this.column,'Semantico',`No existe el struct ${this.type.typeId}`);
+            this.type.struct = struct;
+        }
     }
 }
 

@@ -25,7 +25,16 @@ export class Return extends Instruction {
         if (!this.sameType(symFunc.type, value.type))
             throw new Error(this.line, this.column, 'Semantico', `Se esperaba ${symFunc.type.type} y se obtuvo ${value.type.type}`);
 
-        if (symFunc.type.type != Types.VOID)
+        if(symFunc.type.type == Types.BOOLEAN){
+            const templabel = generator.newLabel();
+            generator.addLabel(value.trueLabel);
+            generator.addSetStack('p', '1');
+            generator.addGoto(templabel);
+            generator.addLabel(value.falseLabel);
+            generator.addSetStack('p', '0');
+            generator.addLabel(templabel);
+        } 
+        else if (symFunc.type.type != Types.VOID)
             generator.addSetStack('p', value.getValue());
 
         generator.addGoto(enviorement.return || '');
