@@ -2,6 +2,7 @@ import { Enviorement } from "./Compiler/SymbolTable/Enviorement";
 import { Instruction } from "./Compiler/Abstract/Instruction";
 import { Generator } from "./Compiler/Generator/Generator";
 import { FunctionSt } from "./Compiler/Instruction/Functions/FunctionSt";
+import { StructSt } from "./Compiler/Instruction/Functions/StructSt";
 
 const fs = require('fs');
 const parser = require('./Grammar/grammar');
@@ -13,13 +14,14 @@ try{
     
     //Primera pasada, solo funciones y structs pendientes
     ast.forEach( (element : Instruction) => {
-        if(element instanceof FunctionSt)
+        if(element instanceof FunctionSt || element instanceof StructSt)
             element.compile(env);
     });
 
     //Segunda pasada ejecuta todo
     ast.forEach( (element : Instruction) => {
-        element.compile(env);
+        if(!(element instanceof StructSt))
+            element.compile(env);
     });
      
     let code = Generator.getInstance().getCode();

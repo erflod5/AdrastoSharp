@@ -3,6 +3,7 @@ import { Enviorement } from "../../SymbolTable/Enviorement";
 import { Retorno } from "../../Utils/Retorno";
 import { Error } from "../../Utils/Error";
 import { Generator } from "../../Generator/Generator";
+import { Types } from "../../Utils/Type";
 
 export class AssignmentFunc extends Expression{
     private id: string;
@@ -46,7 +47,17 @@ export class AssignmentFunc extends Expression{
             generator.addAntEnv(enviorement.size);
             generator.recoverTemps(enviorement,size);
             generator.addTemp(temp);
-            return new Retorno(temp,true,symFunc.type);
+
+            if (symFunc.type.type != Types.BOOLEAN) return new Retorno(temp,true,symFunc.type);
+
+            const retorno = new Retorno('', false, symFunc.type);
+            this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
+            this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
+            generator.addIf(temp, '1', '==', this.trueLabel);
+            generator.addGoto(this.falseLabel);
+            retorno.trueLabel = this.trueLabel;
+            retorno.falseLabel = this.falseLabel;
+            return retorno;
         }
         else{
 

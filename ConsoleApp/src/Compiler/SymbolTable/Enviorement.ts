@@ -44,7 +44,7 @@ export class Enviorement {
         if (this.vars.get(id) != undefined) {
             return null;
         }
-        const newVar = new Symbol(type, id, this.size++, isConst, this.anterior == null, isRef)
+        const newVar = new Symbol(type, id, this.size++, isConst, this.anterior == null, isRef);
         this.vars.set(id, newVar);
         return newVar;
     }

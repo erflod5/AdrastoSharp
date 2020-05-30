@@ -1,14 +1,55 @@
-define estudiante as [integer edad, char sexo,estudiante next];
+Define BNode as [BNode left, BNode right, integer value];
+Define BTree as [BNode root];
 
-estudiante e1 = strc estudiante();
-estudiante e2 = strc estudiante();
+void principal() {
+    BTree tree = strc BTree();        
+    tree.root=addNode(1, tree.root);
+    tree.root=addNode(2, tree.root);
+    tree.root=addNode(3, tree.root);
+    tree.root=addNode(4, tree.root);
+    tree.root=addNode(5, tree.root);
+    tree.root=addNode(6, tree.root);
+    tree.root=addNode(7, tree.root);
+    tree.root=addNode(8, tree.root);    
+    tree.root=addNode(8, tree.root);    
+    preOrder(tree.root);  
+}
 
 
-e1.edad = 100;
-e1.sexo = 'M';
-e1.next = e2;
 
-e2.edad = 300;
-e2.sexo = 'M';
+BNode addNode(integer value, BNode subRoot) {
+    if(exists(value, subRoot)){
+        println('R');
+        return subRoot;
+    }
+    return add(value, subRoot);
+}
 
-println(e1.next.edad);
+BNode add(integer value, BNode subRoot) {
+    if (subRoot == null) {
+        subRoot = strc BNode();
+        subRoot.value = value;
+    } else if (subRoot.value > value) {
+        subRoot.left = add(value, subRoot.left);
+    } else if (value >  subRoot.value) {
+        subRoot.right = add(value, subRoot.right);
+    }
+    return subRoot;
+}
+
+boolean exists(integer value, BNode subRoot){
+    if (subRoot != null) {
+        return subRoot.value == value || exists(value, subRoot.left) || exists(value, subRoot.right);
+    }
+    return false;
+}    
+
+void preOrder(BNode subRoot) {
+    if (subRoot != null) {
+        preOrder(subRoot.left);
+        print(subRoot.value);
+        preOrder(subRoot.right);
+    }
+}
+
+principal();

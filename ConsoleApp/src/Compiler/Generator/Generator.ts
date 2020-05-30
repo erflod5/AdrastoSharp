@@ -6,6 +6,7 @@ export class Generator{
     private label : number;
     private code : string[];
     private tempStorage : Set<string>;
+    isFunc = '';
 
     private constructor(){
         this.temporal = this.label = 0;
@@ -36,7 +37,7 @@ export class Generator{
     }
 
     public addCode(code : string){
-        this.code.push(code);
+        this.code.push(this.isFunc + code);
     }
 
     public getCode() : string{
@@ -54,51 +55,51 @@ export class Generator{
     }
 
     public addLabel(label : string){
-        this.code.push(`${label}:`);
+        this.code.push(`${this.isFunc}${label}:`);
     }
 
     public addExpression(target : string, left: any, right: any = '', operator: string = ''){
-        this.code.push(`${target} = ${left} ${operator} ${right};`);
+        this.code.push(`${this.isFunc}${target} = ${left} ${operator} ${right};`);
     }
 
     public addGoto(label : string){
-        this.code.push(`goto ${label};`);
+        this.code.push(`${this.isFunc}goto ${label};`);
     }
 
     public addIf(left: any, right: any, operator: string, label : string){
-        this.code.push(`if (${left} ${operator} ${right}) goto ${label};`);
+        this.code.push(`${this.isFunc}if (${left} ${operator} ${right}) goto ${label};`);
     }
 
     public nextHeap(){
-        this.code.push('h = h + 1;');
+        this.code.push(this.isFunc + 'h = h + 1;');
     }
 
     public addGetHeap(target : any, index: any){
-        this.code.push(`${target} = Heap[${index}];`);
+        this.code.push(`${this.isFunc}${target} = Heap[${index}];`);
     }
 
     public addSetHeap(index: any, value : any){
-        this.code.push(`Heap[${index}] = ${value};`);
+        this.code.push(`${this.isFunc}Heap[${index}] = ${value};`);
     }
     
     public addGetStack(target : any, index: any){
-        this.code.push(`${target} = Stack[${index}];`);
+        this.code.push(`${this.isFunc}${target} = Stack[${index}];`);
     }
 
     public addSetStack(index: any, value : any){
-        this.code.push(`Stack[${index}] = ${value};`);
+        this.code.push(`${this.isFunc}Stack[${index}] = ${value};`);
     }
 
     public addNextEnv(size: number){
-        this.code.push(`p = p + ${size};`);
+        this.code.push(`${this.isFunc}p = p + ${size};`);
     }
 
     public addAntEnv(size: number){
-        this.code.push(`p = p - ${size};`);
+        this.code.push(`${this.isFunc}p = p - ${size};`);
     }
 
     public addCall(id: string){
-        this.code.push(`call ${id};`);
+        this.code.push(`${this.isFunc}call ${id};`);
     }
 
     public addBegin(id: string){
@@ -110,7 +111,7 @@ export class Generator{
     }
 
     public addPrint(format: string, value: any){
-        this.code.push(`print("%${format}",${value});`);
+        this.code.push(`${this.isFunc}print("%${format}",${value});`);
     }
 
     public addPrintTrue(){
@@ -136,7 +137,7 @@ export class Generator{
     }
 
     public addComment(comment: string){
-        this.code.push(`/***** ${comment} *****/`);
+        this.code.push(`${this.isFunc}/***** ${comment} *****/`);
     }
 
     public freeTemp(temp: string){

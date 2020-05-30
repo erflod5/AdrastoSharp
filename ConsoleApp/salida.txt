@@ -1,39 +1,513 @@
-T0 = h  ;
-Heap[h] = 0;
-h = h + 1;
-Heap[h] = 0;
-h = h + 1;
-Heap[h] = -1;
-h = h + 1;
-Stack[0] = T0;
-T1 = h  ;
-Heap[h] = 0;
-h = h + 1;
-Heap[h] = 0;
-h = h + 1;
-Heap[h] = -1;
-h = h + 1;
-Stack[1] = T1;
-T2 = Stack[0];
-T3 = T2 + 0;
-Heap[T3] = 100;
-T4 = Stack[0];
-T5 = T4 + 1;
-Heap[T5] = 77;
-T6 = Stack[0];
-T7 = T6 + 2;
-T8 = Stack[1];
-Heap[T7] = T8;
-T9 = Stack[1];
-T10 = T9 + 0;
-Heap[T10] = 300;
-T11 = Stack[1];
-T12 = T11 + 1;
-Heap[T12] = 77;
-T13 = Stack[0];
-T14 = T13 + 2;
-T15 = Heap[T14];
-T16 = T15 + 0;
-T17 = Heap[T16];
-print("%i",T17);
-print("%c",10);
+
+proc main_principal_empty begin
+	T0 = h  ;
+	Heap[h] = -1;
+	h = h + 1;
+	T1 = p + 1;
+	Stack[T1] = T0;
+	T2 = p + 1;
+	T3 = Stack[T2];
+	T4 = T3 + 0;
+	/***** Inicia guardado de temporales *****/
+	T5 = p + 2;
+	Stack[T5] = T4;
+	/***** Fin guardado de temporales *****/
+	T7 = p + 1;
+	T6 = Stack[T7];
+	T8 = T6 + 0;
+	T9 = Heap[T8];
+	T10 = p + 4;
+	Stack[T10] = 1;
+	T10 = T10 + 1;
+	Stack[T10] = T9;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T10 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T11 = p + 2;
+	T4 = Stack[T11];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T4] = T10;
+	T12 = p + 1;
+	T13 = Stack[T12];
+	T14 = T13 + 0;
+	/***** Inicia guardado de temporales *****/
+	T15 = p + 2;
+	Stack[T15] = T14;
+	/***** Fin guardado de temporales *****/
+	T17 = p + 1;
+	T16 = Stack[T17];
+	T18 = T16 + 0;
+	T19 = Heap[T18];
+	T20 = p + 4;
+	Stack[T20] = 2;
+	T20 = T20 + 1;
+	Stack[T20] = T19;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T20 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T21 = p + 2;
+	T14 = Stack[T21];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T14] = T20;
+	T22 = p + 1;
+	T23 = Stack[T22];
+	T24 = T23 + 0;
+	/***** Inicia guardado de temporales *****/
+	T25 = p + 2;
+	Stack[T25] = T24;
+	/***** Fin guardado de temporales *****/
+	T27 = p + 1;
+	T26 = Stack[T27];
+	T28 = T26 + 0;
+	T29 = Heap[T28];
+	T30 = p + 4;
+	Stack[T30] = 3;
+	T30 = T30 + 1;
+	Stack[T30] = T29;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T30 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T31 = p + 2;
+	T24 = Stack[T31];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T24] = T30;
+	T32 = p + 1;
+	T33 = Stack[T32];
+	T34 = T33 + 0;
+	/***** Inicia guardado de temporales *****/
+	T35 = p + 2;
+	Stack[T35] = T34;
+	/***** Fin guardado de temporales *****/
+	T37 = p + 1;
+	T36 = Stack[T37];
+	T38 = T36 + 0;
+	T39 = Heap[T38];
+	T40 = p + 4;
+	Stack[T40] = 4;
+	T40 = T40 + 1;
+	Stack[T40] = T39;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T40 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T41 = p + 2;
+	T34 = Stack[T41];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T34] = T40;
+	T42 = p + 1;
+	T43 = Stack[T42];
+	T44 = T43 + 0;
+	/***** Inicia guardado de temporales *****/
+	T45 = p + 2;
+	Stack[T45] = T44;
+	/***** Fin guardado de temporales *****/
+	T47 = p + 1;
+	T46 = Stack[T47];
+	T48 = T46 + 0;
+	T49 = Heap[T48];
+	T50 = p + 4;
+	Stack[T50] = 5;
+	T50 = T50 + 1;
+	Stack[T50] = T49;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T50 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T51 = p + 2;
+	T44 = Stack[T51];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T44] = T50;
+	T52 = p + 1;
+	T53 = Stack[T52];
+	T54 = T53 + 0;
+	/***** Inicia guardado de temporales *****/
+	T55 = p + 2;
+	Stack[T55] = T54;
+	/***** Fin guardado de temporales *****/
+	T57 = p + 1;
+	T56 = Stack[T57];
+	T58 = T56 + 0;
+	T59 = Heap[T58];
+	T60 = p + 4;
+	Stack[T60] = 6;
+	T60 = T60 + 1;
+	Stack[T60] = T59;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T60 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T61 = p + 2;
+	T54 = Stack[T61];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T54] = T60;
+	T62 = p + 1;
+	T63 = Stack[T62];
+	T64 = T63 + 0;
+	/***** Inicia guardado de temporales *****/
+	T65 = p + 2;
+	Stack[T65] = T64;
+	/***** Fin guardado de temporales *****/
+	T67 = p + 1;
+	T66 = Stack[T67];
+	T68 = T66 + 0;
+	T69 = Heap[T68];
+	T70 = p + 4;
+	Stack[T70] = 7;
+	T70 = T70 + 1;
+	Stack[T70] = T69;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T70 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T71 = p + 2;
+	T64 = Stack[T71];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T64] = T70;
+	T72 = p + 1;
+	T73 = Stack[T72];
+	T74 = T73 + 0;
+	/***** Inicia guardado de temporales *****/
+	T75 = p + 2;
+	Stack[T75] = T74;
+	/***** Fin guardado de temporales *****/
+	T77 = p + 1;
+	T76 = Stack[T77];
+	T78 = T76 + 0;
+	T79 = Heap[T78];
+	T80 = p + 4;
+	Stack[T80] = 8;
+	T80 = T80 + 1;
+	Stack[T80] = T79;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T80 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T81 = p + 2;
+	T74 = Stack[T81];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T74] = T80;
+	T82 = p + 1;
+	T83 = Stack[T82];
+	T84 = T83 + 0;
+	/***** Inicia guardado de temporales *****/
+	T85 = p + 2;
+	Stack[T85] = T84;
+	/***** Fin guardado de temporales *****/
+	T87 = p + 1;
+	T86 = Stack[T87];
+	T88 = T86 + 0;
+	T89 = Heap[T88];
+	T90 = p + 4;
+	Stack[T90] = 8;
+	T90 = T90 + 1;
+	Stack[T90] = T89;
+	p = p + 3;
+	call main_addNode_integer_BNode;
+	T90 = Stack[p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T91 = p + 2;
+	T84 = Stack[T91];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T84] = T90;
+	T93 = p + 1;
+	T92 = Stack[T93];
+	T94 = T92 + 0;
+	T95 = Heap[T94];
+	T96 = p + 3;
+	Stack[T96] = T95;
+	p = p + 2;
+	call main_preOrder_BNode;
+	T96 = Stack[p];
+	p = p - 2;
+	L0:
+end
+
+
+proc main_addNode_integer_BNode begin
+	/***** Inicia If *****/
+	T98 = p + 1;
+	T97 = Stack[T98];
+	T100 = p + 2;
+	T99 = Stack[T100];
+	T101 = p + 4;
+	Stack[T101] = T97;
+	T101 = T101 + 1;
+	Stack[T101] = T99;
+	p = p + 3;
+	call main_exists_integer_BNode;
+	T101 = Stack[p];
+	p = p - 3;
+	if (T101 == 1) goto L2;
+	goto L3;
+	L2:
+	print("%c",82);
+	print("%c",10);
+	T103 = p + 2;
+	T102 = Stack[T103];
+	Stack[p] = T102;
+	goto L1;
+	L3:
+	/***** Inicia guardado de temporales *****/
+	T104 = p + 3;
+	Stack[T104] = T101;
+	/***** Fin guardado de temporales *****/
+	T106 = p + 1;
+	T105 = Stack[T106];
+	T108 = p + 2;
+	T107 = Stack[T108];
+	T109 = p + 5;
+	Stack[T109] = T105;
+	T109 = T109 + 1;
+	Stack[T109] = T107;
+	p = p + 4;
+	call main_add_integer_BNode;
+	T109 = Stack[p];
+	p = p - 4;
+	/***** Inicia recuperado de temporales *****/
+	T110 = p + 3;
+	T101 = Stack[T110];
+	/***** Finaliza recuperado de temporales *****/
+	Stack[p] = T109;
+	goto L1;
+	L1:
+end
+
+
+proc main_add_integer_BNode begin
+	/***** Inicia If *****/
+	T112 = p + 2;
+	T111 = Stack[T112];
+	if (T111 == -1) goto L5;
+	goto L6;
+	L5:
+	T113 = p + 2;
+	T114 = h  ;
+	Heap[h] = -1;
+	h = h + 1;
+	Heap[h] = -1;
+	h = h + 1;
+	Heap[h] = 0;
+	h = h + 1;
+	Stack[T113] = T114;
+	T115 = p + 2;
+	T116 = Stack[T115];
+	T117 = T116 + 2;
+	T119 = p + 1;
+	T118 = Stack[T119];
+	Heap[T117] = T118;
+	goto L7;
+	L6:
+	/***** Inicia If *****/
+	T121 = p + 2;
+	T120 = Stack[T121];
+	T122 = T120 + 2;
+	T123 = Heap[T122];
+	T125 = p + 1;
+	T124 = Stack[T125];
+	if (T123 > T124) goto L8;
+	goto L9;
+	L8:
+	T126 = p + 2;
+	T127 = Stack[T126];
+	T128 = T127 + 0;
+	/***** Inicia guardado de temporales *****/
+	T129 = p + 3;
+	Stack[T129] = T128;
+	/***** Fin guardado de temporales *****/
+	T131 = p + 1;
+	T130 = Stack[T131];
+	T133 = p + 2;
+	T132 = Stack[T133];
+	T134 = T132 + 0;
+	T135 = Heap[T134];
+	T136 = p + 5;
+	Stack[T136] = T130;
+	T136 = T136 + 1;
+	Stack[T136] = T135;
+	p = p + 4;
+	call main_add_integer_BNode;
+	T136 = Stack[p];
+	p = p - 4;
+	/***** Inicia recuperado de temporales *****/
+	T137 = p + 3;
+	T128 = Stack[T137];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T128] = T136;
+	goto L10;
+	L9:
+	/***** Inicia If *****/
+	T139 = p + 1;
+	T138 = Stack[T139];
+	T141 = p + 2;
+	T140 = Stack[T141];
+	T142 = T140 + 2;
+	T143 = Heap[T142];
+	if (T138 > T143) goto L11;
+	goto L12;
+	L11:
+	T144 = p + 2;
+	T145 = Stack[T144];
+	T146 = T145 + 1;
+	/***** Inicia guardado de temporales *****/
+	T147 = p + 3;
+	Stack[T147] = T146;
+	/***** Fin guardado de temporales *****/
+	T149 = p + 1;
+	T148 = Stack[T149];
+	T151 = p + 2;
+	T150 = Stack[T151];
+	T152 = T150 + 1;
+	T153 = Heap[T152];
+	T154 = p + 5;
+	Stack[T154] = T148;
+	T154 = T154 + 1;
+	Stack[T154] = T153;
+	p = p + 4;
+	call main_add_integer_BNode;
+	T154 = Stack[p];
+	p = p - 4;
+	/***** Inicia recuperado de temporales *****/
+	T155 = p + 3;
+	T146 = Stack[T155];
+	/***** Finaliza recuperado de temporales *****/
+	Heap[T146] = T154;
+	L12:
+	L10:
+	L7:
+	T157 = p + 2;
+	T156 = Stack[T157];
+	Stack[p] = T156;
+	goto L4;
+	L4:
+end
+
+
+proc main_exists_integer_BNode begin
+	/***** Inicia If *****/
+	T159 = p + 2;
+	T158 = Stack[T159];
+	if (T158 <> -1) goto L14;
+	goto L15;
+	L14:
+	T161 = p + 2;
+	T160 = Stack[T161];
+	T162 = T160 + 2;
+	T163 = Heap[T162];
+	T165 = p + 1;
+	T164 = Stack[T165];
+	if (T163 == T164) goto L16;
+	goto L19;
+	L19:
+	T167 = p + 1;
+	T166 = Stack[T167];
+	T169 = p + 2;
+	T168 = Stack[T169];
+	T170 = T168 + 0;
+	T171 = Heap[T170];
+	T172 = p + 4;
+	Stack[T172] = T166;
+	T172 = T172 + 1;
+	Stack[T172] = T171;
+	p = p + 3;
+	call main_exists_integer_BNode;
+	T172 = Stack[p];
+	p = p - 3;
+	if (T172 == 1) goto L16;
+	goto L18;
+	L18:
+	/***** Inicia guardado de temporales *****/
+	T173 = p + 3;
+	Stack[T173] = T172;
+	/***** Fin guardado de temporales *****/
+	T175 = p + 1;
+	T174 = Stack[T175];
+	T177 = p + 2;
+	T176 = Stack[T177];
+	T178 = T176 + 1;
+	T179 = Heap[T178];
+	T180 = p + 5;
+	Stack[T180] = T174;
+	T180 = T180 + 1;
+	Stack[T180] = T179;
+	p = p + 4;
+	call main_exists_integer_BNode;
+	T180 = Stack[p];
+	p = p - 4;
+	/***** Inicia recuperado de temporales *****/
+	T181 = p + 3;
+	T172 = Stack[T181];
+	/***** Finaliza recuperado de temporales *****/
+	if (T180 == 1) goto L16;
+	goto L17;
+	L16:
+	Stack[p] = 1;
+	goto L20;
+	L17:
+	Stack[p] = 0;
+	L20:
+	goto L13;
+	L15:
+	goto L22;
+	L21:
+	Stack[p] = 1;
+	goto L23;
+	L22:
+	Stack[p] = 0;
+	L23:
+	goto L13;
+	L13:
+end
+
+
+proc main_preOrder_BNode begin
+	/***** Inicia If *****/
+	T183 = p + 1;
+	T182 = Stack[T183];
+	if (T182 <> -1) goto L25;
+	goto L26;
+	L25:
+	T185 = p + 1;
+	T184 = Stack[T185];
+	T186 = T184 + 0;
+	T187 = Heap[T186];
+	T188 = p + 3;
+	Stack[T188] = T187;
+	p = p + 2;
+	call main_preOrder_BNode;
+	T188 = Stack[p];
+	p = p - 2;
+	T190 = p + 1;
+	T189 = Stack[T190];
+	T191 = T189 + 2;
+	T192 = Heap[T191];
+	print("%i",T192);
+	T194 = p + 1;
+	T193 = Stack[T194];
+	T195 = T193 + 1;
+	T196 = Heap[T195];
+	T197 = p + 3;
+	Stack[T197] = T196;
+	p = p + 2;
+	call main_preOrder_BNode;
+	T197 = Stack[p];
+	p = p - 2;
+	L26:
+	L24:
+end
+
+p = p + 0;
+call main_principal_empty;
+T198 = Stack[p];
+p = p - 0;

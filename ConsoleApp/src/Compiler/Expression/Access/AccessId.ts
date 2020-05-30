@@ -28,7 +28,7 @@ export class AccessId extends Expression {
                 generator.addGetStack(temp, symbol.position);
                 if (symbol.type.type != Types.BOOLEAN) return new Retorno(temp, true, symbol.type, symbol);
 
-                const retorno = new Retorno('', false, symbol.type);
+                const retorno = new Retorno('', false, symbol.type,symbol);
                 this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
                 this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
                 generator.addIf(temp, '1', '==', this.trueLabel);
@@ -36,9 +36,6 @@ export class AccessId extends Expression {
                 retorno.trueLabel = this.trueLabel;
                 retorno.falseLabel = this.falseLabel;
                 return retorno;
-            }
-            else if (symbol.isRef) {
-                //TODO variables por referencia
             }
             else {
                 const tempAux = generator.newTemporal(); generator.freeTemp(tempAux);
@@ -57,6 +54,7 @@ export class AccessId extends Expression {
             }
         }
         else {
+            //TODO faltan booleanos
             const anterior = this.anterior.compile(enviorement);
             const symStruct = anterior.type.struct;
             if (anterior.type.type != Types.STRUCT || symStruct == null)
@@ -73,6 +71,5 @@ export class AccessId extends Expression {
 
             return new Retorno(temp, true, attribute.value.type);
         }
-        throw "No implementados los accesos";
     }
 }
