@@ -39,9 +39,6 @@ export class Assignment extends Instruction {
                 generator.addSetStack(symbol.position, value.getValue());
             }
         }
-        else if (symbol?.isRef) {
-            //TODO variables por referencia
-        }
         else if (symbol?.isHeap) {
             if (target.type.type == Types.BOOLEAN) {
                 const templabel = generator.newLabel();

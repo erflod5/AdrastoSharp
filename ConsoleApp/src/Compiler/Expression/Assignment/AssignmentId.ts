@@ -25,9 +25,6 @@ export class AssignmentId extends Expression {
             if (symbol.isGlobal) {
                 return new Retorno(symbol.position + '', false, symbol.type, symbol);
             }
-            else if (symbol.isRef) {
-                //TODO variables por referencia
-            }
             else {
                 const temp = generator.newTemporal();
                 generator.addExpression(temp, 'p', symbol.position, '+');
@@ -55,8 +52,7 @@ export class AssignmentId extends Expression {
             }
 
             generator.addExpression(temp,tempAux,attribute.index,'+'); 
-            return new Retorno(temp,true,attribute.value.type,new Symbol(attribute.value.type,this.id,attribute.index,false,false,false,true));
+            return new Retorno(temp,true,attribute.value.type,new Symbol(attribute.value.type,this.id,attribute.index,false,false,true));
         }
-        throw new Error(this.line, this.column, 'Semantico', 'Aun no lo hago wey');
     }
 }

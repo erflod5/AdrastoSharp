@@ -54,7 +54,9 @@ decimal {entero}"."{entero}
 [/][*][^*]*[*]+([^/*][^*][*]+)*[/]  {}
 
 {decimal}             return 'LDECIMAL'
-{entero}              return 'LINTEGER' 
+{entero}              return 'LINTEGER'
+"++"                  return '++'
+"--"                  return '--' 
 "*"                   return '*'
 "/"                   return '/'
 ";"                   return ';'
