@@ -63,10 +63,9 @@ export class Declaration extends Instruction {
 
     private validateType(enviorement: Enviorement){
         if(this.type.type == Types.STRUCT){
-            const struct = enviorement.searchStruct(this.type.typeId);
+            const struct = enviorement.getStruct(this.type.typeId);
             if(!struct)
                 throw new Error(this.line,this.column,'Semantico',`No existe el struct ${this.type.typeId}`);
-            this.type.struct = struct;
         }
     }
 }

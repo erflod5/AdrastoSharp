@@ -60,10 +60,9 @@ export class FunctionSt extends Instruction{
             if(set.has(param.id.toLowerCase()))
                 throw new Error(this.line,this.column,'Semantico',`Ya existe un parametro con el id ${param.id}`);
             if(param.type.type == Types.STRUCT ){
-                const struct = enviorement.structExists(param.type.typeId);
+                const struct = enviorement.getStruct(param.type.typeId);
                 if(!struct)
                     throw new Error(this.line,this.column,'Semantico',`No existe el struct ${param.type.typeId}`);
-                param.type.struct = struct;
             }
             set.add(param.id.toLowerCase());
         });
@@ -71,10 +70,9 @@ export class FunctionSt extends Instruction{
 
     private validateType(enviorement: Enviorement){
         if(this.type.type == Types.STRUCT){
-            const struct = enviorement.searchStruct(this.type.typeId);
+            const struct = enviorement.getStruct(this.type.typeId);
             if(!struct)
                 throw new Error(this.line,this.column,'Semantico',`No existe el struct ${this.type.typeId}`);
-            this.type.struct = struct;
         }
     }
 

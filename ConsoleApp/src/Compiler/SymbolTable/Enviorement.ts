@@ -95,20 +95,14 @@ export class Enviorement {
         return null;
     }
 
-    public structExists(id: string){
-        return this.structs.get(id.toLocaleLowerCase());
+    public getStruct(id: string){
+        return this.getGlobal().structs.get(id.toLocaleLowerCase());
     }
 
-    public searchStruct(id: string) : SymbolStruct | null{
-        let enviorement : Enviorement | null = this;
-        id = id.toLowerCase();
-        while(enviorement != null){
-            const sym = enviorement.structs.get(id);
-            if(sym != undefined){
-                return sym;
-            }
-            enviorement = enviorement.anterior;
-        }
-        return null;
+    public getGlobal() : Enviorement{
+        let temp  : Enviorement | null = this;
+        while(temp.anterior != null)
+            temp  = temp.anterior;
+        return temp;
     }
 }

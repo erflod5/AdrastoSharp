@@ -33,11 +33,10 @@ export class AssignmentId extends Expression {
         }
         else {
             const anterior = this.anterior.compile(enviorement);
-            const symStruct = anterior.type.struct;
             if (anterior.type.type != Types.STRUCT)
                 throw new Error(this.line, this.column, 'Semantico', `Acceso no valido para el tipo ${anterior.type.type}`);
-
-            const attribute = symStruct?.getAttribute(this.id) || anterior.type.struct?.getAttribute(this.id);
+            const symStruct = enviorement.getStruct(anterior.type.typeId);
+            const attribute = symStruct?.getAttribute(this.id);
             if (attribute == undefined || attribute.value == null)
                 throw new Error(this.line, this.column, 'Semantico', `El struct ${symStruct?.identifier} no tiene el atributo ${this.id}`);
 

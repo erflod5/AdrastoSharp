@@ -101,6 +101,8 @@ decimal {entero}"."{entero}
 "as"                  return 'AS'
 "strc"                return 'STRC'
 "null"                return 'NULL'
+"array"               return 'ARRAY'
+"new"                 return 'NEW'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*       return 'ID'
 [\']([^\t\'\"\n]|(\\\")|(\\n)|(\\\')|(\\t))?[\'] { yytext = yytext.substr(1,yyleng-2).replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\\\", "\\").replace("\\\"", "\""); return 'LCHAR'; }
@@ -299,6 +301,21 @@ Declaration
     | ID IdList '=' Expression{
         $$ = new Declaration(new Type(Types.STRUCT,$1),$2,$4,@1.first_line,@1.first_column);
     }
+    | Type ID Dimension '=' Expression {
+
+    }
+    | ID ID Dimension '=' Expression{
+
+    }
+;
+
+Dimension
+    : Dimension '[' ']' {
+
+    }
+    | '[' ']' {
+
+    }
 ;
 
 Assignment
@@ -310,6 +327,9 @@ Assignment
 AssignmentId
     : AssignmentId '.' ID {
         $$ = new AssignmentId($3,$1,@1.first_line,@1.first_column);
+    }
+    | AssignmentId '[' Expression ']' {
+
     }
     | ID {
         $$ = new AssignmentId($1,null,@1.first_line,@1.first_column);
@@ -442,6 +462,12 @@ Expression
     | STRC ID '(' ')' {
         $$ = new NewStruct($2,@1.first_line,@1.first_column);
     } 
+    | NEW ARRAY '(' Expression ')' {
+
+    }
+    | '[' ExpressionList ']' {
+
+    }
 ;
 
 Access
@@ -456,6 +482,9 @@ Access
 AccessId 
     : AccessId '.' ID {
         $$ = new AccessId($3,$1,@1.first_line,@1.first_column);
+    }
+    | AccessId '[' Expression ']' {
+        
     }
     | ID {
         $$ = new AccessId($1,null,@1.first_line,@1.first_column);

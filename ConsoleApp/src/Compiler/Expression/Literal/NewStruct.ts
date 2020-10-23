@@ -15,7 +15,7 @@ export class NewStruct extends Expression {
     }
 
     compile(enviorement: Enviorement): Retorno {
-        const symStruct = enviorement.searchStruct(this.id);
+        const symStruct = enviorement.getStruct(this.id);
         const generator = Generator.getInstance();
         if (symStruct == null)
             throw new Error(this.line, this.column, 'Semantico', `No existe el struct ${this.id} en este ambito`);
@@ -37,6 +37,6 @@ export class NewStruct extends Expression {
             }
             generator.nextHeap();
         })
-        return new Retorno(temp,true,new Type(Types.STRUCT,symStruct.identifier,symStruct));
+        return new Retorno(temp,true,new Type(Types.STRUCT,symStruct.identifier));
     }
 }

@@ -15,11 +15,9 @@ export enum Types{
 export class Type{
     type : Types;
     typeId : string;
-    struct : SymbolStruct | null;
 
-    constructor(type: Types, typeId: string = '', struct : SymbolStruct | null = null){
+    constructor(type: Types, typeId: string = ''){
         this.type = type;
         this.typeId = typeId;
-        this.struct = struct;
     }
 }

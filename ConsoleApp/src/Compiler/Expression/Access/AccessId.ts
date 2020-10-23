@@ -56,7 +56,7 @@ export class AccessId extends Expression {
         else {
             //TODO faltan booleanos
             const anterior = this.anterior.compile(enviorement);
-            const symStruct = anterior.type.struct;
+            const symStruct = enviorement.getStruct(anterior.type.typeId);
             if (anterior.type.type != Types.STRUCT || symStruct == null)
                 throw new Error(this.line, this.column, 'Semantico', `Acceso no valido para el tipo ${anterior.type.type}`);
             const attribute = symStruct.getAttribute(this.id);
