@@ -25,6 +25,7 @@ export class AssignmentFunc extends Expression{
             const paramsValues = new Array<Retorno>();
             const generator = Generator.getInstance();
             const size = generator.saveTemps(enviorement); //Guardo temporales
+
             this.params.forEach((param)=>{
                 paramsValues.push(param.compile(enviorement));
             })
@@ -33,6 +34,7 @@ export class AssignmentFunc extends Expression{
             //Paso de parametros en cambio simulado
             if(paramsValues.length != 0){
                 generator.addExpression(temp,'p',enviorement.size + 1,'+'); //+1 porque la posicion 0 es para el retorno;
+
                 paramsValues.forEach((value,index)=>{
                     //TODO paso de parametros booleanos
                     generator.addSetStack(temp,value.getValue());
@@ -45,6 +47,7 @@ export class AssignmentFunc extends Expression{
             generator.addCall(symFunc.uniqueId);
             generator.addGetStack(temp,'p');
             generator.addAntEnv(enviorement.size);
+
             generator.recoverTemps(enviorement,size);
             generator.addTemp(temp);
 

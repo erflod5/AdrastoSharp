@@ -22,7 +22,9 @@ export class If extends Instruction {
         generator.addComment('Inicia If');
         const condition = this.condition?.compile(enviorement);
         const newEnv = new Enviorement(enviorement);
+
         if(condition.type.type == Types.BOOLEAN){
+            
             generator.addLabel(condition.trueLabel);
             this.instruction.compile(newEnv);
             if(this.elseI != null){

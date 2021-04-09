@@ -18,6 +18,7 @@ export class Plus extends Expression {
     public compile(enviorement: Enviorement): Retorno {
         const left = this.left.compile(enviorement);
         const right = this.right.compile(enviorement);
+
         const generator = Generator.getInstance();
         const temp = generator.newTemporal();
         switch (left.type.type) {
@@ -118,14 +119,18 @@ export class Plus extends Expression {
                         generator.addAntEnv(enviorement.size);
                         return new Retorno(temp, true, new Type(Types.STRING));
                     case Types.STRING:
-                        generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
-                        generator.addSetStack(tempAux,left.getValue());
-                        generator.addExpression(tempAux,tempAux,'1','+');
-                        generator.addSetStack(tempAux,right.getValue());
-                        generator.addNextEnv(enviorement.size);
+                        generator.addExpression('T1', left.getValue());
+                        generator.addExpression('T2', right.getValue());
                         generator.addCall('native_concat_str_str');
-                        generator.addGetStack(temp,'p');
-                        generator.addAntEnv(enviorement.size);
+                        generator.addExpression(temp, 'T3');
+                        // generator.addExpression(tempAux,'p',enviorement.size + 1, '+');
+                        // generator.addSetStack(tempAux,left.getValue());
+                        // generator.addExpression(tempAux,tempAux,'1','+');
+                        // generator.addSetStack(tempAux,right.getValue());
+                        // generator.addNextEnv(enviorement.size);
+                        // generator.addCall('native_concat_str_str');
+                        // generator.addGetStack(temp,'p');
+                        // generator.addAntEnv(enviorement.size);
                         return new Retorno(temp, true, new Type(Types.STRING));
                     case Types.BOOLEAN:
                         const lblTemp = generator.newLabel();

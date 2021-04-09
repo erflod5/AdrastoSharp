@@ -13,6 +13,9 @@ export class Break extends Instruction{
         if(enviorement.break == null){ 
             throw new Error(this.line,this.column,'Semantico','Break en un ambito incorrecto');
         }
+        Generator.getInstance().addComment('Break aqui');
         Generator.getInstance().addGoto(enviorement.break);
+        Generator.getInstance().addComment('Break termina');
+
     }
 }

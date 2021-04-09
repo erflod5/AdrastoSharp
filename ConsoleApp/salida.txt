@@ -1,21 +1,35 @@
-goto L0;
-L0:
-print("%c",116);
-print("%c",114);
-print("%c",117);
-print("%c",101);
-goto L2;
-L1:
-print("%c",102);
-print("%c",97);
-print("%c",108);
-print("%c",115);
-print("%c",101);
-L2:
-goto L3;
-L3:
-Stack[0] = 1;
-goto L5;
-L4:
-Stack[0] = 0;
-L5:
+
+proc main_factorial_integer begin
+	/***** Inicia If *****/
+	T6 = p + 1;
+	T5 = Stack[(int)T6];
+	if (T5 == 0) goto L1;
+	goto L2;
+	L1:
+	Stack[(int)p] = 1;
+	goto L0;
+	L2:
+	T8 = p + 1;
+	T7 = Stack[(int)T8];
+	/***** Inicia guardado de temporales *****/
+	T9 = p + 2;
+	Stack[(int)T9] = T7;
+	/***** Fin guardado de temporales *****/
+	T11 = p + 1;
+	T10 = Stack[(int)T11];
+	T12 = T10 - 1;
+	T13 = p + 4;
+	Stack[(int)T13] = T12;
+	p = p + 3;
+	call main_factorial_integer;
+	T13 = Stack[(int)p];
+	p = p - 3;
+	/***** Inicia recuperado de temporales *****/
+	T14 = p + 2;
+	T7 = Stack[(int)T14];
+	/***** Finaliza recuperado de temporales *****/
+	T15 = T7 * T13;
+	Stack[(int)p] = T15;
+	goto L0;
+	L0:
+end

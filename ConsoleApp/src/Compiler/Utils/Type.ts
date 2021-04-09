@@ -15,9 +15,11 @@ export enum Types{
 export class Type{
     type : Types;
     typeId : string;
+    dimension : number;
 
-    constructor(type: Types, typeId: string = ''){
+    constructor(type: Types, typeId: string = '', dimension : number = 0){
         this.type = type;
         this.typeId = typeId;
-    }
+        this.dimension = dimension;
+     }
 }

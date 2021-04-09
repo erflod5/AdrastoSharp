@@ -17,10 +17,9 @@ export class And extends Expression {
 
     compile(enviorement: Enviorement): Retorno {
         const generator = Generator.getInstance();
-        this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
-        this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
-
         this.left.trueLabel = generator.newLabel();
+        this.falseLabel = this.falseLabel == '' ? generator.newLabel() : this.falseLabel;
+        this.trueLabel = this.trueLabel == '' ? generator.newLabel() : this.trueLabel;
         this.right.trueLabel = this.trueLabel;
         this.left.falseLabel = this.right.falseLabel = this.falseLabel;
 
@@ -37,3 +36,27 @@ export class And extends Expression {
         throw new Error(this.line, this.column, 'Semantico', `No se puede And: ${left.type.type} && ${right.type.type}`);
     }
 }
+/*
+/***** Inicia If *****
+if (1 == 1) goto L2;
+goto L1;
+
+L2:
+
+if (2 <> 2) goto L0;
+goto L1;
+
+L0:
+print("%i",1);
+L1:
+
+
+if(1 == 1 && 2 <> 2){
+
+}
+
+ExprIzquierda     -> 1 == 1
+ExprDerecha       -> 2 <> 2
+
+trueLabel -> L1
+falseLabel -> L2*/

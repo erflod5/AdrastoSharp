@@ -3,8 +3,7 @@ import { Enviorement } from "../../SymbolTable/Enviorement";
 import { Retorno } from "../../Utils/Retorno";
 import { Generator } from "../../Generator/Generator";
 import { Error } from "../../Utils/Error";
-import { Types, Type } from "../../Utils/Type";
-import { Symbol } from "../../SymbolTable/Symbol";
+import { Types } from "../../Utils/Type";
 
 export class AccessId extends Expression {
     private id: string;

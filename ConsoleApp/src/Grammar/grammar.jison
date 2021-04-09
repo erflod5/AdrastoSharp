@@ -12,6 +12,7 @@
     const {Return} = require('../Compiler/Instruction/Transfer/Return');
 
     const {Declaration} = require('../Compiler/Instruction/Variables/Declaration');
+    const {DeclarationArray} = require('../Compiler/Instruction/Variables/DeclarationArray');
     const {Assignment} = require('../Compiler/Instruction/Variables/Assignment');
     const {Call} = require('../Compiler/Instruction/Variables/Call');
 
@@ -36,8 +37,12 @@
     const {NotEquals} = require('../Compiler/Expression/Relational/NotEquals');
 
     const {AccessId} = require('../Compiler/Expression/Access/AccessId');
+    const {NewArray} = require('../Compiler/Expression/Access/NewArray');
+    const {AccessArray} = require('../Compiler/Expression/Access/AccessArray');
+    const {ArrayExpr} = require('../Compiler/Expression/Access/ArrayExpr');
     const {AssignmentId} = require('../Compiler/Expression/Assignment/AssignmentId');
     const {AssignmentFunc} = require('../Compiler/Expression/Assignment/AssignmentFunc');
+    const {AssignmentArray} = require('../Compiler/Expression/Assignment/AssignmentArray');
 
     const {Types,Type} = require('../Compiler/Utils/Type');
     const {Param} = require('../Compiler/Utils/Param');
@@ -302,19 +307,20 @@ Declaration
         $$ = new Declaration(new Type(Types.STRUCT,$1),$2,$4,@1.first_line,@1.first_column);
     }
     | Type ID Dimension '=' Expression {
-
+        $1.dimension = $3;
+        $$ = new DeclarationArray($1, $2, $5, @1.first_line, @1.first_column);
     }
     | ID ID Dimension '=' Expression{
-
+        $$ = new DeclarationArray(new Type(Types.STRUCT,$1, $3), $2, $5, @1.first_line, @1.first_column);
     }
 ;
 
 Dimension
     : Dimension '[' ']' {
-
+        $$ = $1 + 1;
     }
     | '[' ']' {
-
+        $$ = 1;
     }
 ;
 
@@ -329,7 +335,7 @@ AssignmentId
         $$ = new AssignmentId($3,$1,@1.first_line,@1.first_column);
     }
     | AssignmentId '[' Expression ']' {
-
+        $$ = new AssignmentArray($3, $1, @1.first_line, @1.first_column);
     }
     | ID {
         $$ = new AssignmentId($1,null,@1.first_line,@1.first_column);
@@ -463,10 +469,10 @@ Expression
         $$ = new NewStruct($2,@1.first_line,@1.first_column);
     } 
     | NEW ARRAY '(' Expression ')' {
-
+        $$ = new NewArray($4, @1.first_line, @1.first_column);
     }
     | '[' ExpressionList ']' {
-
+        $$ = new ArrayExpr($2, @1.first_line, @1.first_column);
     }
 ;
 
@@ -484,7 +490,7 @@ AccessId
         $$ = new AccessId($3,$1,@1.first_line,@1.first_column);
     }
     | AccessId '[' Expression ']' {
-        
+        $$ = new AccessArray($3, $1, @1.first_line, @1.first_column);
     }
     | ID {
         $$ = new AccessId($1,null,@1.first_line,@1.first_column);

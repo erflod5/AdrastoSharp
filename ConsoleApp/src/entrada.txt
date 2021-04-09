@@ -1,2 +1,6 @@
-print(true);
-boolean a = true;
+integer factorial(integer a){
+    if (a == 0){
+        return 1;
+    }
+    return a * factorial(a - 1);
+}

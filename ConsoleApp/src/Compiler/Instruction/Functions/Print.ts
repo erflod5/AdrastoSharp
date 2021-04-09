@@ -38,10 +38,8 @@ export class Print extends Instruction {
                 generator.addLabel(templabel);
                 break;
             case Types.STRING:
-                generator.addNextEnv(enviorement.size);
-                generator.addSetStack('p', value.getValue());
+                generator.addExpression('T1', value.getValue());
                 generator.addCall('native_print_str');
-                generator.addAntEnv(enviorement.size);
                 break;
             case Types.NULL:
                 generator.addPrintNull();

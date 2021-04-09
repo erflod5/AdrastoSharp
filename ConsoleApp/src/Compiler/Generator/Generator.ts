@@ -9,7 +9,8 @@ export class Generator{
     isFunc = '';
 
     private constructor(){
-        this.temporal = this.label = 0;
+        this.temporal = 5;
+        this.label = 0;
         this.code = new Array();
         this.tempStorage = new Set();
     }
@@ -75,19 +76,19 @@ export class Generator{
     }
 
     public addGetHeap(target : any, index: any){
-        this.code.push(`${this.isFunc}${target} = Heap[${index}];`);
+        this.code.push(`${this.isFunc}${target} = Heap[(int)${index}];`);
     }
 
     public addSetHeap(index: any, value : any){
-        this.code.push(`${this.isFunc}Heap[${index}] = ${value};`);
+        this.code.push(`${this.isFunc}Heap[(int)${index}] = ${value};`);
     }
     
     public addGetStack(target : any, index: any){
-        this.code.push(`${this.isFunc}${target} = Stack[${index}];`);
+        this.code.push(`${this.isFunc}${target} = Stack[(int)${index}];`);
     }
 
     public addSetStack(index: any, value : any){
-        this.code.push(`${this.isFunc}Stack[${index}] = ${value};`);
+        this.code.push(`${this.isFunc}Stack[(int)${index}] = ${value};`);
     }
 
     public addNextEnv(size: number){
